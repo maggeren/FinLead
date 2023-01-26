@@ -1,9 +1,24 @@
+
+require('node-jsx').install();
 const express = require("express");
 const app = express();
 const port = 3000;
+const renderer = require("react-engine")
+const engine = renderer.server.create();
+
+
+
+
+// 
+app.engine('.jsx', engine);
+app.set('views', __dirname + '/public/views');
+app.set('view engine', 'jsx');
+app.set("view", renderer.expressView)
+
+app.use(express.static(__dirname + "/public"))
 
 app.get("/", (req: any, res: any)=>{
-    res.send("<h1>Hello world</h1>")
+    res.render("page")
 })
 
 
