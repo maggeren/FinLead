@@ -1,3 +1,5 @@
+
+
 function sayHello(){
-console.log('vi er inde i sayHello')  
+    console.log("Hej med dig kaj!")
 }
