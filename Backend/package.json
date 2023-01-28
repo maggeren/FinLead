@@ -2,10 +2,11 @@
   "name": "finlead",
   "version": "1.0.0",
   "description": "as specified in README.md",
-  "main": "app.ts",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon sever.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "express-react-views": "^0.11.0",
     "mongoose": "^6.9.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0"
   }
 }
