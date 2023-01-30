@@ -28,9 +28,15 @@ console.log(response);
     return(
         <div className="home">
             <div className="workouts">
+            {workouts ? (
+                <>
                 <h1>  {workouts.mesg} </h1>
                 <p> Name: {workouts.person.name}</p>
                 <p> Age: {workouts.person.age}</p>
+                </>
+            ) : (
+                <p>Loading...</p>
+            )}
             </div>
         </div>
     )

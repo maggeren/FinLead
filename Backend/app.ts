@@ -1,13 +1,10 @@
-const express = require("express");
-const app = express();
-const port = 4000;
+var express = require("express");
+const workoutRoutes = require('./routes/workout')
+var app = express();
+var port = 5000;
 
-app.get("/", (req: any, res: any)=>{
-    res.json({msg: "Hello world"})
-})
+app.use('/api/workouts/', workoutRoutes)
 
-
-app.listen(port, ()=>{
-console.log(`Server started on port ${port}`)
-})
-
+app.listen(port, function () {
+    console.log("Server started on port ".concat("" + port));
+});
