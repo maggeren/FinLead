@@ -1,0 +1,27 @@
+{
+  "name": "FinLead",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "concurrently \"npm run react-start\" \"npm run server-start\"",
+    "react-start": "npm run start --prefix Frontend",
+    "server-start": "nodemon app.js --prefix Backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maggeren/FinLead.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maggeren/FinLead/issues"
+  },
+  "homepage": "https://github.com/maggeren/FinLead#readme"
+}
