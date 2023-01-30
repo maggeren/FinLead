@@ -2,11 +2,11 @@
   "name": "finlead",
   "version": "1.0.0",
   "description": "as specified in README.md",
-  "main": "app.ts",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon sever.js"
   },
   "repository": {
     "type": "git",
@@ -22,15 +22,12 @@
   },
   "homepage": "https://github.com/maggeren/FinLead#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "express-cors": "0.0.3",
     "express-react-views": "^0.11.0",
     "mongoose": "^6.9.0",
-    "node-jsx": "^0.13.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-engine": "^4.5.1",
-    "react-router-dom": "^6.8.0"
+    "react-router-dom": "^6.8.0",
+    "typescript": "^4.9.4"
   }
 }
