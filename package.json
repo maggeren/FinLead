@@ -20,11 +20,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "concurrently npm run react-start npm run server-start",
-    "react-start": "npm run start --prefix Frontend",
-    "server-start": "nodemon app.js --prefix Backend",
-    "test": "echo Error: no test specified && exit 1",
-    "dev": "nodemon sever.js"
+    "start": "concurrently \"npm run react-start\" \"npm run server-start\"",
+    "react-start": "npm start --prefix Frontend",
+    "server-start": "node Backend/app.js",
+    "test": "echo Error: no test specified && exit 1"
   },
   "repository": {
     "type": "git",

@@ -9,7 +9,7 @@ var port = 5000;
 app.use('/api/workouts/', workoutRoutes);
 
 
-mongoose.connect(`${process.env.CONNECTION}`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb+srv://tobi2202:finLead2025@finleadcluster.3djmplw.mongodb.net/?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const testSchema = new mongoose.Schema({
     name: String
