@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "as specified in README.md",
   "main": "app.js",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
@@ -16,14 +17,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.9.4"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "concurrently \"npm run react-start\" \"npm run server-start\"",
-    "react-start": "npm start --prefix Frontend",
-    "server-start": "node Backend/app.js",
-    "test": "echo Error: no test specified && exit 1"
+    "start": "concurrently cd Backend && node app.js & cd Frontend/src && npm start",
+    "start:node": "cd Backend && node app.js",
+    "start:react": "cd Frontend/src && npm start"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,17 @@
   "bugs": {
     "url": "https://github.com/maggeren/FinLead/issues"
   },
-  "homepage": "https://github.com/maggeren/FinLead#readme"
+  "homepage": "https://github.com/maggeren/FinLead#readme",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
