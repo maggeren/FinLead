@@ -2,7 +2,7 @@
   "name": "FinLead",
   "version": "1.0.0",
   "description": "as specified in README.md",
-  "main": "app.js",
+  "main": "index.js",
   "dependencies": {
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
@@ -11,16 +11,18 @@
     "express-cors": "0.0.3",
     "mongoose": "^6.9.0",
     "node-jsx": "^0.13.3",
+    "node-start": "^1.0.1",
     "react": "^18.2.0",
-    "react-router-dom": "^6.8.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "react-start": "^1.1.2",
+    "start": "^5.1.0",
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "start": "concurrently npm run react-start npm run server-start",
-    "react-start": "node Frontend",
-    "server-start": "node app.js",
-    "test": "echo Error: no test specified && exit 1"
+    "start": "concurrently node index.js & cd Frontend/src && npm start",
+    "start:node": "node ./index.js",
+    "start:react": "cd Frontend/src && npm start"
   },
   "repository": {
     "type": "git",
