@@ -12,14 +12,22 @@ function App() {
     <Navbar/>
       <div className='pages'>
         <Routes>
-          <Route
+          {/* <Route
           path='/'
             element={<Home />}
-          />
+          /> */}
           
         </Routes>
       </div>
     </BrowserRouter>
+    <form action='/login' method='post'>
+      <h3>Login</h3>
+      <label for="username">Brugernavn</label>
+      <input type="email" name="username" />
+      <label for="password">Adgangskode</label>
+      <input type="password" name="passsord" />
+      <input type="submit"/>
+    </form>
     </div>
   );
 }
