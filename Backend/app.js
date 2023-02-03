@@ -8,14 +8,14 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt");
+const session = require("express-session");
 const app = express();
 const port = 5000;
 //Using statements
 app.use('/api/workouts/', workoutRoutes);
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
+app.use(passport.initialize());
+app.use(passport.session());
 mongoose.connect(`mongodb+srv://tobi2202:finLead2025@finleadcluster.3djmplw.mongodb.net/?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const testSchema = new mongoose.Schema({
@@ -37,6 +37,48 @@ const User = mongoose.model("User", userSchema);
 // const testUser = new Test({name: "Kagebamsen2042"})
 // testUser.save();
 
+app.use(express.session({
+    //proxy: true,
+    secret: "DMU20XY",
+    resave:false,
+    saveUnitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 12, //12hours
+    },
+    cookie: { secure: false } // Remember to set this
+}));
+
+passport.use(new localStrategy(function(username, password, done){
+    User.findOne({username:username}, function(err, user){
+        if(err) return done(err);
+        if(!user)
+            return done(null, false, {message: "Incorrect username"})
+        
+        bcrypt.compare(password, user.password, function(err, res){
+            if(err) return done(err);
+            
+            if(res === false){
+                return done(null, false, {message: "Incorrect password"})
+            }
+  
+            return done(null, user);
+  
+        })
+    })
+  }))
+
+passport.serializeUser(function(user, done){
+    done(null, user.id);
+  })
+  
+passport.deserializeUser(function(id, done){
+    User.findById(id, (err, user)=>{
+        done(err, user)
+    })
+  
+})
+
+//Routes
 
 app.listen(port, function () {
     console.log("Server started on port ".concat("" + port));
@@ -57,4 +99,8 @@ app.post("/login", (req, res)=>{
     }
   })
   
+})
+
+app.post("/signup", (req, res)=>{
+
 })
