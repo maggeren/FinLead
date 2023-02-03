@@ -14,6 +14,16 @@ const port = 5000;
 //Using statements
 app.use('/api/workouts/', workoutRoutes);
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({
+    proxy: true,
+    secret: "DMU20XY",
+    resave:false,
+    saveUnitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 12, //12hours
+    },
+    cookie: { secure: false } // Remember to set this
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 mongoose.connect(`mongodb+srv://tobi2202:finLead2025@finleadcluster.3djmplw.mongodb.net/?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -37,19 +47,10 @@ const User = mongoose.model("User", userSchema);
 // const testUser = new Test({name: "Kagebamsen2042"})
 // testUser.save();
 
-app.use(express.session({
-    //proxy: true,
-    secret: "DMU20XY",
-    resave:false,
-    saveUnitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 12, //12hours
-    },
-    cookie: { secure: false } // Remember to set this
-}));
 
-passport.use(new localStrategy(function(username, password, done){
-    User.findOne({username:username}, function(err, user){
+
+passport.use(new localStrategy(function(mail, password, done){
+    User.findOne({mail:mail}, function(err, user){
         if(err) return done(err);
         if(!user)
             return done(null, false, {message: "Incorrect username"})
@@ -84,23 +85,58 @@ app.listen(port, function () {
     console.log("Server started on port ".concat("" + port));
 });
 
-app.post("/login", (req, res)=>{
-  const username = req.body.username;
-  const password = req.body.passsord;
-  User.findOne({password: password}, (err, user)=>{
-    if(err) console.log(err);
-    else{
-        console.log(user);
-        console.log(user.mail);
-        if(user.mail === username){
-            console.log("Sucessfully logged in! Now redirecting")
-            res.redirect("/");
-        }
-    }
-  })
-  
-})
+app.post("/login",passport.authenticate('local', {
+    successRedirect: "/",
+    failureRedirect: "/login?error=true"
+    
+  }),
+  )
 
-app.post("/signup", (req, res)=>{
+// app.post("/login", (req, res)=>{
+//     const username = req.body.username;
+//     const password = req.body.passsord;
+//     User.findOne({password: password}, (err, user)=>{
+//       if(err) console.log(err);
+//       else{
+//           console.log(user);
+//           console.log(user.mail);
+//           if(user.mail === username){
+//               console.log("Sucessfully logged in! Now redirecting")
+//               res.redirect("/");
+//           }
+//       }
+//     })
+    
+//   })
+
+app.post("/register", async(req, res)=>{
+    const mail = req.body.mail;
+    const password = req.body.password;
+    
+    const exists = await User.exists({mail:mail});
+    
+    if(exists){
+      res.redirect("/");
+      return;
+    }
+
+    bcrypt.genSalt(10, function(err, salt){
+        if(err) return next(err);
+        bcrypt.hash(password, salt, function(err, hash){
+            if(err) return next(err);
+  
+            const newUser = new User({
+                mail: mail,
+                password: hash
+            });
+            console.log("New User added");
+  
+             newUser.save();
+             res.redirect("/");
+  
+        });
+    });
+
+    
 
 })
