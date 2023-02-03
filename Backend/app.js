@@ -17,8 +17,8 @@ const testSchema = new mongoose.Schema({
 
 const Test = mongoose.model("Test", testSchema);
 
-const testUser = new Test({name: "Kagebamsen2042"})
-testUser.save();
+// const testUser = new Test({name: "Kagebamsen2042"})
+// testUser.save();
 
 
 app.listen(port, function () {
