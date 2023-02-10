@@ -50,23 +50,6 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// passport.use(
-//   new localStrategy(function (mail, password, done) {
-//     User.findOne({ mail: mail }, function (err, user) {
-//       if (err) return done(err);
-//       if (!user) return done(null, false, { message: "Incorrect username" });
-//       bcrypt.compare(password, user.password, function (err, res) {
-//         if (err) return done(err);
-//         if (res === false) {
-//           return done(null, false, { message: "Incorrect password" });
-//         }
-
-//         return done(null, user);
-//       });
-//     });
-//   })
-// );
-
 passport.use(
   new localStrategy((mail, password, done) => {
     User.findOne({ mail: mail }, (err, user) => {
@@ -100,13 +83,11 @@ app.listen(port, function () {
   console.log("Server started on port ".concat("" + port));
 });
 
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login?error=true",
-  })
-);
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  console.log(email);
+  res.redirect("/");
+});
 
 app.post("/register", async (req, res) => {
   const mail = req.body.mail;
