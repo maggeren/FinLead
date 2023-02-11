@@ -110,7 +110,6 @@ app.post("/register", async (req, res) => {
         password: hash,
       });
       console.log("New User added");
-
       newUser.save();
       res.redirect("/");
     });
