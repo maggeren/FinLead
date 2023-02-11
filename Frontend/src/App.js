@@ -1,37 +1,27 @@
-import logo from "./logo.svg";
-import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Router,
+  Route,
+  Routes,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
+import Root from "./pages/Root";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root></Root>,
+    errorElement: <h1>WRONG PAGE MODDAFUCKA</h1>,
+    children: [
+      { path: "contacts/:contactId", element: <h1> HALLÅ</h1> },
+      { path: "hello", element: <h1>hello</h1> },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <div className="pages">
-          <Routes>
-          </Routes>
-        </div>
-      </BrowserRouter>
-      <form action="/login" method="post">
-        <h3>Login</h3>
-        <label for="username">Brugernavn</label>
-        <input type="email" name="email" /> <br />
-        <label for="password">Adgangskode</label>
-        <input type="password" name="passsord" /> <br />
-        <input type="submit" />
-      </form>
-      <form action="/register" method="post">
-        <h3>Signup</h3>
-        <label for="username">mail:</label>
-        <input type="email" name="mail" /> <br />
-        <label for="password">password</label>
-        <input type="password" name="password" /> <br />
-        <input type="submit" />
-      </form>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
