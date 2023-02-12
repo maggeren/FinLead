@@ -13,7 +13,7 @@
 // const localStrategy = require("passport-local").Strategy;
 // const bcrypt = require("bcrypt");
 
-// const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 // const port = 4000;
 
 // //Using statements
