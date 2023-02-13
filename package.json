@@ -2,7 +2,8 @@
   "name": "FinLead",
   "version": "1.0.0",
   "description": "as specified in README.md",
-  "main": "app.js",
+  "main": "server.js",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
@@ -21,9 +22,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "concurrently \"npm run server-start\" \"npm run react-start\"",
+    "start": "node Backend/server.js",
     "react-start": "npm start Frontend",
-    "server-start": "node Backend/app.js",
+    "server-start": "node Backend/server.js",
     "test": "echo Error: no test specified && exit 1"
   },
   "repository": {
