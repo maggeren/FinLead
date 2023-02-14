@@ -1,0 +1,15 @@
+{
+    
+        "compilerOptions": {
+          "baseUrl": ".",
+          "target": "es6",
+          "paths": {
+            "*": [
+              "../node_modules/express*",
+              "src/*"
+            ]
+          },
+          "moduleResolution": "node"
+        }
+      
+}
