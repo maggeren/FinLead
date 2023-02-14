@@ -1,4 +1,5 @@
-function Root() {
-  return <div> DETTE ER ROOT </div>;
+import {Login} from "../components/Login"
+
+export const Root = () => {
+  return <div><Login/></div>
 }
-export default Root;
