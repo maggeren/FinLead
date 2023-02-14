@@ -1,12 +1,14 @@
 import User from "../models/User.js";
-
-const loginUser = async (req, res) => {
-  const email = req.body.email;
-  const plainTextPassword = req.body.password;
-  console.log({ email, plainTextPassword });
-  const user = User.find({ email: email });
-  const isUser = comparePassword(plainTextPassword, user.password);
-  isUser ? res.send(200) : res.send(401);
+import { comparePasswords } from "../utils/bcrypt.js";
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password: plainTextPassword } = req.body;
+    const hashedPassword = (await User.findOne({ email: email })).password;
+    const isUser = await comparePasswords(plainTextPassword, hashedPassword);
+    isUser
+      ? res.status(200).json("Succesful")
+      : res.status(400).json("Access denied");
+  } catch (err) {
+    console.log(err);
+  }
 };
-
-export default loginUser;

@@ -25,6 +25,7 @@
     "start": "node Backend/server.js",
     "react-start": "npm start Frontend",
     "server-start": "node Backend/server.js",
+    "tsc": "tsc",
     "test": "echo Error: no test specified && exit 1"
   },
   "repository": {
