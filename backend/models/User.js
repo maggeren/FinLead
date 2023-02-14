@@ -4,13 +4,13 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please add Password"],
-    unique: true,
   },
   userName: {
     type: String,
     required: [true, "Please add userName"],
     unique: true,
   },
+  createdAt: String
 });
 const User = mongoose.model("User", userSchema);
 export default User;

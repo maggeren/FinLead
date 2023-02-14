@@ -1,7 +1,5 @@
 import express from "express";
-// import registerUser from "../controllers/registerController";
+import registerUser from "../controllers/registerController.js";
 const registerRouter = express.Router();
-registerRouter.post("/api/register", async (req, res) => {
-  next();
-});
+registerRouter.post("/api/register", registerUser);
 export default registerRouter;

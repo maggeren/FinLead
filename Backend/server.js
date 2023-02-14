@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //_________ROUTES_________
-app.use("/api/register", registerRouter);
+app.all("/api/register", registerRouter);
 app.all("/api/login", loginRouter);
 //________________________
 
