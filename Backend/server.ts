@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.all("/api/register", registerRouter);
 app.all("/api/login", loginRouter);
 //________________________
-
 const server = app.listen(PORT, () =>
   console.log(`Server started on PORT ${PORT}`)
 );
