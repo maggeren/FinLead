@@ -7,6 +7,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import {Root} from "./pages/Root";
+import React, {useState} from "react";
 
 // const router = createBrowserRouter([
 //   {
@@ -21,7 +22,9 @@ import {Root} from "./pages/Root";
 // ]);
 
 function App() {
-  console.log("hello");
+
+  
+ 
   return(
     <Root/>
   // <BrowserRouter>

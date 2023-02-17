@@ -1,4 +1,4 @@
-//import React from "react";
+import React, {useState} from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import "../styles/login.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,7 +6,7 @@ import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import InputField from "./InputField";
 
 export const Login = (props)=> {
-
+   
   return (
     <div className="container">
       <div className="loginContainer">
@@ -14,13 +14,11 @@ export const Login = (props)=> {
         <br/>
           <img src="Title.png" alt="Title"></img>
         </div>
-
-
 <br/>
 <br/>
         <form className="login">
-          <InputField type="email" />
-          {/* <InputField type="password"/> */}
+          <InputField type="email" placeholder="email"/>
+          <InputField type="password" placeholder="password"/> 
           <div className="form-group mb-3" control-id="formBasicCheckbox">
             <p className="small">
               <a className="text-primary" href="#!">
