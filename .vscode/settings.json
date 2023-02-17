@@ -1,8 +1,5 @@
 {
     "files.exclude": {
-      // Hide the node_modules folder
-      // Hide all files that end in .d.ts
-      // Hide all files that end with .js if they have a .ts file
       "**/*.js": {
         "when": "$(basename).ts"
       },

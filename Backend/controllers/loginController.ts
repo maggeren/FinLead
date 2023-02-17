@@ -1,5 +1,5 @@
-import User from "../models/User.js";
-import { comparePasswords } from "../utils/bcrypt.js";
+import User from "../models/User";
+import { comparePasswords } from "../utils/bcrypt";
 export const loginUser = async (req, res) => {
   try {
     const { email, password: plainTextPassword } = req.body;

@@ -1,6 +1,6 @@
 import User from "../models/User.js";
-import {hashPassword} from "../utils/bcrypt.js";
-const registerUser = async (req, res) => {
+import {hashPassword} from "../utils/bcrypt";
+const registerUser = async (req:any, res:any) => {
   const { email, password, userName } = req.body;
   console.log({email, password})
   const hashedPassword = await hashPassword(password);
