@@ -42,6 +42,14 @@ body{
   width: 10%;
 }
 
+.eye-open{
+  background-image: url("../../public/open-eye.png");
+}
+
+.eye-closed{
+  background-image: url("../../public/closed-eye.png");
+}
+
 input {
   display: flex;
   justify-content: center;
