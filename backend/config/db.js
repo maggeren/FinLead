@@ -23,5 +23,4 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         process.exit(1);
     }
 });
-//heloooo
 export default connectDB;

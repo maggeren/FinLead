@@ -7,6 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// import User from "../../models/User.js";
+// import { v4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { loginController } from "./loginController.js";
 const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,4 +29,5 @@ function sendEmailToUser(email, link) {
         //TODO: Send email to user
     });
 }
+//Comment.
 export const resetController = { changePassword };

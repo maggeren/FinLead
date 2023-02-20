@@ -17,7 +17,7 @@ export const Login = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-    const respose = await fetch(`https://localhost:5000/api/login`, {
+    const respose = await fetch(`http://localhost:4000/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
