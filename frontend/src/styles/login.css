@@ -40,7 +40,10 @@ body{
   display: inline;
   vertical-align: "middle";
   width: 10%;
+  position: absolute;
+  top:45.9%;
 }
+
 
 .eye-open{
   background-image: url("../../public/open-eye.png");

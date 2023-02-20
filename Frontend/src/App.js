@@ -9,31 +9,24 @@ import {
 import {Root} from "./pages/Root";
 import React, {useState} from "react";
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Root/>,
-//     errorElement: <h1>WRONG PAGE MODDAFUCKA</h1>,
-//     children: [
-//       { path: "contacts/:contactId", element: <h1> HALLÅ</h1> },
-//       { path: "hello", element: <h1>hello</h1> },
-//     ],
-//   },
-// ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <h1>WRONG PAGE MODDAFUCKA</h1>,
+    children: [
+      { path: "contacts/:contactId", element: <h1> HALLÅ</h1> },
+      { path: "hello", element: <h1>hello</h1> },
+    ],
+  },
+]);
 
 function App() {
 
   
  
   return(
-    <Root/>
-  // <BrowserRouter>
-  //     <Routes>
-  //       <Route path="/" element={<Root />} />
-  //       <Route path="/lol" element={<h1>Fuck dig</h1>} />
-  //     </Routes>
-  //   </BrowserRouter>
-  // )
+     <RouterProvider router={router}></RouterProvider>
   )
 }
 
