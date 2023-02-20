@@ -4,7 +4,9 @@ import bcrypt from "bcrypt";
  * Returns hashed password
  * @param password user password before encryption
  */
-export const hashPassword = async (plaintextPassword:any) => {
+export const hashPassword = async (
+  plaintextPassword: string
+): Promise<string> => {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(plaintextPassword, saltRounds);
   return hashedPassword;
@@ -15,7 +17,10 @@ export const hashPassword = async (plaintextPassword:any) => {
  * @param plaintextPassword user password before encryption
  * @param hashedPassword user password after encryption
  */
-export const comparePasswords = async (plaintextPassword:any, hashedPassword:any) => {
+export const comparePasswords = async (
+  plaintextPassword: string,
+  hashedPassword: string
+): Promise<boolean> => {
   try {
     const result = await bcrypt.compare(plaintextPassword, hashedPassword);
     return result;

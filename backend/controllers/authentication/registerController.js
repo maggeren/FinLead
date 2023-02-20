@@ -7,21 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import mongoose from "mongoose";
-/**
- * Connect to MongoDB
- */
-const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        mongoose.set("strictQuery", false);
-        const conn = yield mongoose.connect(process.env.DB_CONNECTION, {});
-        console.log(`💾 MongoDB connected: ${conn.connection.host} 💾`);
-    }
-    catch (err) {
-        console.error(err);
-        //Everything else than 0 exits the prcoess with a failure.
-        process.exit(1);
-    }
+import User from "../../models/User.js";
+import { hashPassword } from "../../utils/bcrypt.js";
+const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password, userName } = req.body;
+    console.log({ email, password });
+    const hashedPassword = yield hashPassword(password);
+    const newUser = new User({
+        userName: userName,
+        email: email,
+        password: hashedPassword,
+        createdAt: new Date().toLocaleDateString("en-GB"),
+    });
+    newUser.save();
+    res.status(200).json("New User Added!");
 });
-//heloooo
-export default connectDB;
+export const registerController = { registerUser };

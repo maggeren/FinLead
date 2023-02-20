@@ -1,15 +1,15 @@
 {
-    
-        "compilerOptions": {
-          "baseUrl": ".",
-          "target": "es6",
-          "paths": {
-            "*": [
-              "../node_modules/express*",
-              "src/*"
-            ]
-          },
-          "moduleResolution": "node"
-        }
-      
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es6",
+    "strict": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "*": ["../node_modules/express*", "src/*"]
+    },
+    "moduleResolution": "node"
+  }
 }

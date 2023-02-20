@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please add userName"],
         unique: true,
     },
-    createdAt: String
+    createdAt: String,
 });
 const User = mongoose.model("User", userSchema);
 export default User;
