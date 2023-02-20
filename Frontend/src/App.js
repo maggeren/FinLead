@@ -1,7 +1,14 @@
-import { Root } from "./pages/Root";
-import React from "react";
-import { Router, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { NotFound } from "./pages/NotFound.js";
+import {
+  BrowserRouter,
+  Router,
+  Route,
+  Routes,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
+import {Root} from "./pages/Root";
+import React, {useState} from "react";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,11 +28,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={router}>
-      <Router />
-    </RouterProvider>
-  );
+
+  
+ 
+  return(
+     <RouterProvider router={router}></RouterProvider>
+  )
 }
 
 export default App;

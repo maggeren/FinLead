@@ -1,6 +1,6 @@
-import {Login} from "../components/Login"
+import {ModalPopup} from "../components/ModalPopup"
 
 export const Root = () => {
 
-  return <div><Login/></div>
+  return <div><ModalPopup/></div>
 }
