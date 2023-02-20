@@ -2,30 +2,29 @@ import React from "react";
 import { useState } from "react";
 import InlineImage from "./InlineImage";
 
-function InputField(props){
+function InputField({ type, value, onChange }) {
+  const initialType = type;
+  const [inputType, setInputType] = useState(type);
 
-    const manageInput = () => {const[inputType, setInputType] = useState(props.type);
+  const handleClick = (e) => {
+    inputType === "password" ? setInputType("text") : setInputType("password");
+  };
 
-    }
-
-    const handleClick =(e)=>{
-        inputType === "password" ? setInputType("text"): setInputType("password")
-    }
-
-    return(
-        <div>
-        <input type={props.type} placeholder={props.placeholder}/>
-        {props.type === "password" &&(
-            <InlineImage class = "eye-closed" name="eye" clickEvent = {handleClick}/>
-            )}
-        <br></br>
-       
-        </div>
-        
-    )
-
-    
-
+  return (
+    <div>
+      <input
+        value={value}
+        type={inputType}
+        placeholder={initialType}
+        name={initialType}
+        onChange={onChange}
+      />
+      {inputType === "password" && (
+        <InlineImage class="eye-closed" name="eye" clickEvent={handleClick} />
+      )}
+      <br></br>
+    </div>
+  );
 }
 
 export default InputField;
