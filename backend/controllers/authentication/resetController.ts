@@ -21,4 +21,5 @@ async function sendEmailToUser(email: string, link: string) {
   //TODO: Send email to user
 }
 
+//Comment.
 export const resetController = { changePassword };
