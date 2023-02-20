@@ -41,3 +41,59 @@ function App() {
 }
 
 export default App;
+//----------------------------------------------------------
+
+
+
+
+export const ModalPopup=(props)=>{
+    const[showModal, setShowModal] = useState(false);
+
+    const handleOpenModal = () => {
+        !showModal ? setShowModal(true):setShowModal(false);
+      };
+      const handleLoginSubmit = (event) => {
+        event.preventDefault();
+      };
+
+      return (
+        <div className="container">
+          <button onClick={handleOpenModal}>Login</button>
+          {showModal && (
+            <div className="modal loginContainer">
+              <div className="modal-content">
+                <img src="Title.png" alt="Title"></img>
+                <form onSubmit={handleLoginSubmit} className="login">
+                <InputField type="email" placeholder="email"/>
+                <InputField type="password" placeholder="password"/> 
+                <div className="form-group mb-3" control-id="formBasicCheckbox">
+            <p className="small">
+              <a className="text-primary" href="#!">
+                Forgot password?
+              </a>
+            </p>
+          </div>
+          <div className="d-flex justify-content-center">
+            <button className="btn btn" type="submit">
+              Login
+            </button>
+          </div>
+                </form>
+                <div className="mt-3">
+          <p className="mb-0  text-center">
+            Don't have an account?{" "} <br></br>
+            <a href="{''}" className="text-primary fw-bold">
+              Sign Up
+            </a>
+          </p>
+        </div>
+        <br/>
+        <br/>
+        <p>© FinLead team 2023</p>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+
+}

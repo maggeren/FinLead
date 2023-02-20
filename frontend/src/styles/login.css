@@ -24,16 +24,22 @@ body{
   margin: 1rem;
 }
 .loginContainer {
-  display: flex;
-  width: 30%;
+   display: flex;
+  width: 70%;
   align-items: center;
   justify-content: center;
   height: 60%;
   border-radius: 20px;
-  background-color: whitesmoke;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-  flex-direction: column;
+  /* background-color: whitesmoke;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; */
+  flex-direction: column; 
+  margin: 0 17%; 
 }
+
+.login{
+  
+}
+
 .eye {
   margin-left: -10%;
   margin-bottom: -2%;
@@ -41,7 +47,8 @@ body{
   vertical-align: "middle";
   width: 10%;
   position: absolute;
-  top:45.9%;
+  top:42.9%;
+  left: 36%;
 }
 
 
@@ -62,7 +69,7 @@ input {
 
 .btn[type=submit]{
   background-color: lightgrey;
-  padding:  0% 33% 
+  padding:  0% 40% 
 }
 
 .btn:hover{
