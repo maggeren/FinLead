@@ -17,13 +17,14 @@ export const Login = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-    const respose = await fetch(`http://localhost:4000/api/login`, {
+    const response = await fetch(`http://localhost:4000/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(inputs),
     });
+    console.log(response)
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

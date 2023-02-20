@@ -10,8 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import User from "../../models/User.js";
 import { comparePasswords } from "../../utils/bcrypt.js";
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Nu er vi startet! fra localhost 4000.");
+    console.log(req.body);
     try {
         const { email, password: plainTextPassword } = req.body;
+        console.log("Plain text er ", plainTextPassword);
         const user = yield matchingPasswords(email, plainTextPassword);
         user
             ? res.status(200).json("Succesful")
@@ -28,7 +31,15 @@ function getUserByEmail(email) {
 }
 function matchingPasswords(email, plainTextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
-        const hashedPassword = (yield getUserByEmail(email)).password;
+        console.log("Nu går det galt!");
+        let hashedPassword = "";
+        try {
+            hashedPassword = (yield getUserByEmail(email)).password;
+            console.log("Der eksisterede faktisk en bruger med mail", email);
+        }
+        catch (error) {
+            console.log("User does not exists", error);
+        }
         return yield comparePasswords(plainTextPassword, hashedPassword);
     });
 }
