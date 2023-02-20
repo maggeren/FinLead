@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import User from "../models/User.js";
-import { comparePasswords } from "../utils/bcrypt.js";
+import User from "../models/User";
+import { comparePasswords } from "../utils/bcrypt";
 export const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password: plainTextPassword } = req.body;

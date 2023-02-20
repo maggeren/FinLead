@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import User from "../models/User.js";
-import { hashPassword } from "../utils/bcrypt.js";
+import { hashPassword } from "../utils/bcrypt";
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password, userName } = req.body;
     console.log({ email, password });

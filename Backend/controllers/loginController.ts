@@ -1,6 +1,6 @@
 import User from "../models/User";
 import { comparePasswords } from "../utils/bcrypt";
-export const loginUser = async (req, res) => {
+export const loginUser = async (req: any, res: any) => {
   try {
     const { email, password: plainTextPassword } = req.body;
     const hashedPassword = (await User.findOne({ email: email })).password;
