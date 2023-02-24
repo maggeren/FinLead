@@ -7,6 +7,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import {Root} from "./pages/Root";
+import {MyNavbar} from "./components/Navbar"
 import React, {useState} from "react";
 
 const router = createBrowserRouter([
@@ -26,7 +27,10 @@ function App() {
   
  
   return(
+    <div>
+     <MyNavbar/>
      <RouterProvider router={router}></RouterProvider>
+     </div>
   )
 }
 

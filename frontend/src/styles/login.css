@@ -96,3 +96,7 @@ input{
   border-color: lightgray;
   border-width:0.5px;
 }
+
+.myNavbar{
+  border-radius: 5%;
+}
