@@ -6,10 +6,12 @@ html {
   width: 100%;
   height: 100%;
   font-size: 16px;
+  
 }
 
 body{
   margin-left: 7% !important;
+  background-color: transparent !important;
 }
 
 .container {
@@ -95,4 +97,34 @@ input {
 input{
   border-color: lightgray;
   border-width:0.5px;
+}
+
+form input{
+  border-radius: 5% !important;
+  border: 2px solid black !important;
+}
+
+.myNavbar{
+  background-color: lightgray;
+  width:90%;
+}
+
+.icon-container{
+  display: flex;
+}
+
+.navBar-link{
+  margin: 0 20% !important;
+}
+
+.link-container{
+  margin: 0 5%;
+}
+
+.dropdown-toggle::after{
+  display: none !important;
+}
+
+.nav-logo{
+  height: 5vh;
 }
