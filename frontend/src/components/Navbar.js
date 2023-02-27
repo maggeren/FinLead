@@ -5,22 +5,17 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import InlineImage from "./InlineImage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faCircleInfo, faComment, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
 
 export const MyNavbar = () =>{
     return (
-        <Navbar bg="light" expand="lg" style={{borderRadius: "10%"}}>
-      <Container fluid>
-        <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
+        <Navbar className="myNavbar">
+      <Container fluid style={{backgroundColor: "transparent"}}>
+        <Navbar.Brand href="#" className="nav-logo"><img src="Title.png"/></Navbar.Brand>
+        <NavDropdown id="navbarScrollingDropdown" title={<FontAwesomeIcon icon={faBars}/>}>
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
                 Another action
@@ -30,20 +25,36 @@ export const MyNavbar = () =>{
                 Something else here
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Link
-            </Nav.Link>
-          </Nav>
-          <Form className="d-flex">
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Form className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success">Search</Button>
           </Form>
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="me-auto my-2 my-lg-0 link-container"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
+            <Nav.Link href="#action1" className="navBar-link">Rankings</Nav.Link>
+            <Nav.Link href="#action2" className="navBar-link">Forum</Nav.Link>
+            
+            <Nav.Link href="#" className="navBar-link">
+              News
+            </Nav.Link>
+            
+          </Nav>
+          
         </Navbar.Collapse>
+        <div className="icon-container">
+            <Nav.Link><FontAwesomeIcon icon={faCircleInfo}/></Nav.Link>
+            <Nav.Link><FontAwesomeIcon icon={faComment}/></Nav.Link>
+            <Nav.Link><FontAwesomeIcon icon={faUserCircle}/></Nav.Link>
+            </div>
       </Container>
     </Navbar>
     )
