@@ -99,10 +99,10 @@ input{
   border-width:0.5px;
 }
 
-form input{
+/* form input{
   border-radius: 5% !important;
   border: 2px solid black !important;
-}
+} */
 
 .myNavbar{
   background-color: lightgray;
@@ -111,6 +111,7 @@ form input{
 
 .icon-container{
   display: flex;
+  margin-right: 5%;
 }
 
 .navBar-link{
@@ -118,7 +119,7 @@ form input{
 }
 
 .link-container{
-  margin: 0 5%;
+  margin-left: 18%;
 }
 
 .dropdown-toggle::after{
@@ -127,4 +128,40 @@ form input{
 
 .nav-logo{
   height: 5vh;
+}
+
+.nav-icon{
+  margin-left: 2rem;
+}
+
+/*svg images inside the .nav-icon*/
+.nav-icon svg{
+  height: 2.5em !important;
+  margin: 0 3% !important;
+}
+
+/* .search-bar{
+  margin-left: 2%;
+} */
+
+form.form-search {
+  position: relative;
+}
+
+form.form-search:before {
+  content:'';
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-image: url(http://getbootstrap.com/2.3.2/assets/img/glyphicons-halflings.png);
+  background-position: -48px 0;
+  position: absolute;
+  top:8px;
+  left:8px;
+  opacity: .5;
+  z-index: 1000;
+}
+
+input.search-query {
+  padding-left:26px;
 }
