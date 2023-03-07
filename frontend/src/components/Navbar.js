@@ -14,7 +14,7 @@ export const MyNavbar = () =>{
     return (
         <Navbar className="myNavbar">
       <Container fluid style={{backgroundColor: "transparent"}}>
-        <Navbar.Brand href="#" className="nav-logo"><img src="Title.png"/></Navbar.Brand>
+        <Navbar.Brand href="#" ><img src="Title.png" className="nav-logo"/></Navbar.Brand>
         <NavDropdown id="navbarScrollingDropdown" title={<FontAwesomeIcon icon={faBars}/>}>
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -26,11 +26,11 @@ export const MyNavbar = () =>{
               </NavDropdown.Item>
             </NavDropdown>
         <Navbar.Toggle aria-controls="navbarScroll" />
-        <Form className="d-flex">
+        <Form className=" search-bar form-search form-inline">
             <Form.Control
               type="search"
               placeholder="Search"
-              className="me-2"
+              className="me-2 search-query"
               aria-label="Search"
             />
           </Form>
@@ -51,9 +51,9 @@ export const MyNavbar = () =>{
           
         </Navbar.Collapse>
         <div className="icon-container">
-            <Nav.Link><FontAwesomeIcon icon={faCircleInfo}/></Nav.Link>
-            <Nav.Link><FontAwesomeIcon icon={faComment}/></Nav.Link>
-            <Nav.Link><FontAwesomeIcon icon={faUserCircle}/></Nav.Link>
+            <Nav.Link className="nav-icon"><FontAwesomeIcon icon={faCircleInfo}/></Nav.Link>
+            <Nav.Link className="nav-icon"><FontAwesomeIcon icon={faComment}/></Nav.Link>
+            <Nav.Link className="nav-icon"><FontAwesomeIcon icon={faUserCircle}/></Nav.Link>
             </div>
       </Container>
     </Navbar>
