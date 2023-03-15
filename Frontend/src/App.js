@@ -1,7 +1,15 @@
-import { Root } from "./pages/Root";
-import React from "react";
-import { Router, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { NotFound } from "./pages/NotFound.js";
+import {
+  BrowserRouter,
+  Router,
+  Route,
+  Routes,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
+import {Root} from "./pages/Root";
+import {MyNavbar} from "./components/Navbar"
+import React, {useState} from "react";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,11 +29,15 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={router}>
-      <Router />
-    </RouterProvider>
-  );
+
+  
+ 
+  return(
+    <div >
+     <MyNavbar/>
+     <RouterProvider router={router}></RouterProvider>
+     </div>
+  )
 }
 
 export default App;
