@@ -8,22 +8,18 @@ import React from "react";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
-    errorElement: <NotFound />,
-    children: [{ path: "contacts/:contactId", element: <h1> HALLÅ</h1> }],
-  },
-  {
-    path: "/stock/:ticker",
-    element: <Stock></Stock>,
-    errorElement: <NotFound />,
-    children: [],
+    element: <MyNavbar></MyNavbar>,
+    errorElement: <NotFound> </NotFound>,
+    children: [
+      { path: "stock/:ticker", element: <Stock></Stock> },
+      { path: "about", element: <h1>About</h1> },
+    ],
   },
 ]);
 
 function App() {
   return (
     <div>
-      <MyNavbar />
       <RouterProvider router={router}></RouterProvider>
     </div>
   );
