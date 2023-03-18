@@ -2,7 +2,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Root } from "./pages/Root";
 import { NotFound } from "./pages/NotFound";
 import { MyNavbar } from "./components/Navbar";
-import React, { useState } from "react";
+import Stock from "./pages/Stock";
+import React from "react";
 
 const router = createBrowserRouter([
   {
@@ -12,13 +13,10 @@ const router = createBrowserRouter([
     children: [{ path: "contacts/:contactId", element: <h1> HALLÅ</h1> }],
   },
   {
-    path: "/helo",
-    element: <h1>HALLO</h1>,
-    errorElement: <h1>WRONG PAGE MODDAFUCKA</h1>,
-    children: [
-      { path: "contacts/:contactId", element: <h1> HALLÅ</h1> },
-      { path: "hello", element: <h1>hello</h1> },
-    ],
+    path: "/stock/:ticker",
+    element: <Stock></Stock>,
+    errorElement: <NotFound />,
+    children: [],
   },
 ]);
 
