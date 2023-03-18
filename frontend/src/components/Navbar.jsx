@@ -36,7 +36,7 @@ export const MyNavbar = () => {
   return (
     <Navbar className="myNavbar">
       <Container fluid style={{ backgroundColor: "transparent" }}>
-        <Navbar.Brand href="#">
+        <Navbar.Brand href="/">
           <img src="/Title.png" className="nav-logo" />
         </Navbar.Brand>
         <NavDropdown
