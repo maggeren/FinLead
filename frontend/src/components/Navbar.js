@@ -17,6 +17,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import LRUCache from "lru-cache";
 
+const cache = new LRUCache({
+  max: 5,
+  maxAge: 10 * 60 * 1000 // 10 minutes in milliseconds
+});
+
 const showTickers = (filteredTickers) => {
   if (filteredTickers.length === 0) return null;
   return (
@@ -34,13 +39,20 @@ const showTickers = (filteredTickers) => {
 
 export const MyNavbar = () => {
   useEffect(() => {
-    fetch("/tickers.txt").then((response) => {
-      response.text().then((text) => {
-        const tickersArr = text.split("\n");
-        setTickers(tickersArr);
+    const cachedTickers = cache.get("tickers"); // try to get tickers from cache
+    if (cachedTickers) {
+      setTickers(cachedTickers);
+      return;
+    } else {
+      fetch("/tickers.txt").then((response) => {
+        response.text().then((text) => {
+          const tickersArr = text.split("\n");
+          setTickers(tickersArr);
+          cache.set("tickers", tickersArr); // store tickers in cache
+        });
       });
-    });
-  });
+    }
+  }, []);
 
   const [inputValue, setInputValue] = useState("");
   const [tickers, setTickers] = useState([]);
@@ -73,12 +85,18 @@ export const MyNavbar = () => {
               onChange={(e) => {
                 const value = e.target.value;
                 setInputValue(value);
+                const cachedSuggestions = cache.get(value);
+                if (cachedSuggestions) {
+                  setFilteredSuggestions(cachedSuggestions);
+                }
+                else{
                 const filtered = tickers.filter(
                   (ticker) =>
                     ticker.toLowerCase().includes(value.toLowerCase()) &&
                     value !== ""
                 );
                 setFilteredSuggestions(filtered.slice(0, 10));
+                }
               }}
             />
             {showTickers(filteredSuggestions)}
