@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Router, Route, Outlet } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -16,25 +16,34 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-// const tickers = fetch("/tickers.txt").then((response) => {
-//   response.text().then((text) => {
-//     return text.split("\n");
-//   });
-// });
-
-const suggestions = [
-  "apple",
-  "banana",
-  "cherry",
-  "durian",
-  "elderberry",
-  "fig",
-];
+const showTickers = (filteredTickers) => {
+  if (filteredTickers.length === 0) return null;
+  return (
+    <ul className="dropdown-menu">
+      {filteredTickers.map((ticker, index) => (
+        <li key={index}>
+          <Link to={"stock/" + ticker}>
+            <p>{ticker}</p>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export const MyNavbar = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  useEffect(() => {
+    fetch("/tickers.txt").then((response) => {
+      response.text().then((text) => {
+        const tickersArr = text.split("\n");
+        setTickers(tickersArr);
+      });
+    });
+  });
 
+  const [inputValue, setInputValue] = useState("");
+  const [tickers, setTickers] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   return (
     <div>
       <Navbar className="myNavbar">
@@ -63,16 +72,15 @@ export const MyNavbar = () => {
               onChange={(e) => {
                 const value = e.target.value;
                 setInputValue(value);
-                const filtered = suggestions.filter((suggestion) =>
-                  suggestion.toLowerCase().includes(value.toLowerCase())
+                const filtered = tickers.filter(
+                  (ticker) =>
+                    ticker.toLowerCase().includes(value.toLowerCase()) &&
+                    value !== ""
                 );
-                setFilteredSuggestions(filtered);
+                setFilteredSuggestions(filtered.slice(0, 10));
               }}
             />
-
-            <Link to={"stock/appl"}>
-              <h1>hello</h1>
-            </Link>
+            {showTickers(filteredSuggestions)}
           </Form>
 
           <Navbar.Collapse id="navbarScroll">
