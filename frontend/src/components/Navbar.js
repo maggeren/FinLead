@@ -13,6 +13,7 @@ import {
   faComment,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import LRUCache from "lru-cache";
 
 // const tickers = fetch("/tickers.txt").then((response) => {
 //   response.text().then((text) => {
@@ -28,6 +29,12 @@ const suggestions = [
   "elderberry",
   "fig",
 ];
+
+const cache = new LRUCache({
+  max: 10, // maximum number of entries to be cached
+  maxAge: 1000 * 60 * 5, // maximum age of entries (in milliseconds)
+});
+
 
 export const MyNavbar = () => {
   const [inputValue, setInputValue] = useState("");
@@ -64,6 +71,7 @@ export const MyNavbar = () => {
                 suggestion.toLowerCase().includes(value.toLowerCase())
               );
               setFilteredSuggestions(filtered);
+              cache.set(value, filtered);
             }}
           />
         </Form>
