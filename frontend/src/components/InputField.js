@@ -7,11 +7,9 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 const closedEye = <FontAwesomeIcon icon={faEyeSlash}/>;
 
 function InputField({ type, value, onChange }) {
-  const initialType = type;
-  const [inputType, setInputType] = useState(type);
 
     const[values, setValues] = useState({
-        inputType: props.type,
+        inputType: type,
         image: closedEye
     });
     
@@ -26,37 +24,19 @@ function InputField({ type, value, onChange }) {
             image: closedEye,
         })
         
-    }
-
-    return(
-        <div>
-        <input type={values.inputType} placeholder={props.placeholder}/>
-        {props.type === "password" &&(
-            <InlineImage class = "eye" name="eye" clickEvent={handleClick} image={values.image}/>
-            )}
-        <br></br>
-       
-        </div>
+    } 
+    return (
+      <div style={{ position: "relative !important" }}>
+        <input type={values.inputType} placeholder={type} value={value} onChange={onChange} />
+        {type === "password" && 
+        <InlineImage className = "eye" name="eye" clickEvent={handleClick} image={values.image} 
+          
+        />}     
+        <br />
+      </div>
+    );
         
-    )
-
     
-
-  return (
-    <div>
-      <input
-        value={value}
-        type={inputType}
-        placeholder={initialType}
-        name={initialType}
-        onChange={onChange}
-      />
-      {inputType === "password" && (
-        <InlineImage class="eye-closed" name="eye" clickEvent={handleClick} />
-      )}
-      <br></br>
-    </div>
-  );
 }
 
 export default InputField;

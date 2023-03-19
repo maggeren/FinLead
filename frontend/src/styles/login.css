@@ -46,14 +46,10 @@ body {
 }
 
 .eye {
-  margin-left: -10%;
-  margin-bottom: -2%;
-  display: inline;
-  vertical-align: "middle";
-  width: 10%;
+  margin-left: 158px;
+  margin-top: -25px;
   position: absolute;
-  top: 42.9%;
-  left: 36%;
+  cursor: pointer;
 }
 
 .eye-open {
