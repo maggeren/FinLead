@@ -8,10 +8,10 @@ const closedEye = <FontAwesomeIcon icon={faEyeSlash}/>;
 
 function InputField({ type, value, onChange }) {
   const initialType = type;
-  const [inputType, setInputType] = useState(type);
+  //const [inputType, setInputType] = useState(type);
 
     const[values, setValues] = useState({
-        inputType: props.type,
+        inputType: initialType,
         image: closedEye
     });
     
@@ -30,8 +30,8 @@ function InputField({ type, value, onChange }) {
 
     return(
         <div>
-        <input type={values.inputType} placeholder={props.placeholder}/>
-        {props.type === "password" &&(
+        <input type={values.inputType} placeholder={values.inputType}/>
+        {values.inputType === "password" &&(
             <InlineImage class = "eye" name="eye" clickEvent={handleClick} image={values.image}/>
             )}
         <br></br>
