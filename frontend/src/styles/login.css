@@ -13,8 +13,8 @@ body {
   background-color: transparent !important;
 }
 
-.dropdown-menu {
-  z-index: 34 !important;
+ul.dropdown-menu {
+  z-index: 0 !important;
   display: inline !important;
 }
 
@@ -40,6 +40,15 @@ body {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; */
   flex-direction: column;
   margin: 0 17%;
+
+  
+}
+
+.loginContainer {
+  /* existing styles */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .login {
