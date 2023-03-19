@@ -13,11 +13,6 @@ body {
   background-color: transparent !important;
 }
 
-.dropdown-menu {
-  z-index: 34 !important;
-  display: inline !important;
-}
-
 .container {
   display: flex;
   align-items: center;
@@ -97,11 +92,6 @@ input {
   border-color: lightgray;
   border-width: 0.5px;
 }
-
-/* form input{
-  border-radius: 5% !important;
-  border: 2px solid black !important;
-} */
 
 .myNavbar {
   background-color: lightgray;

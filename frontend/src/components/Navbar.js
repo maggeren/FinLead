@@ -8,6 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import InlineImage from "./InlineImage";
 import Stock from "../pages/Stock";
+import "../styles/navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -16,22 +17,24 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-const showTickers = (filteredTickers) => {
-  if (filteredTickers.length === 0) return null;
-  return (
-    <ul className="dropdown-menu">
-      {filteredTickers.map((ticker, index) => (
-        <li key={index}>
-          <Link to={"stock/" + ticker}>
-            <p>{ticker}</p>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-};
-
 export const MyNavbar = () => {
+  const [tickers, setTickers] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const showTickers = (filteredTickers) => {
+    if (filteredTickers.length === 0) return null;
+    return (
+      <ul className="dropdown-menu">
+        {filteredTickers.map((ticker, index) => (
+          <li key={index} onBlur={() => setIsOpen(false)}>
+            <Link to={"stock/" + ticker}>
+              <p>{ticker}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   useEffect(() => {
     fetch("/tickers.txt").then((response) => {
       response.text().then((text) => {
@@ -41,8 +44,6 @@ export const MyNavbar = () => {
     });
   });
 
-  const [inputValue, setInputValue] = useState("");
-  const [tickers, setTickers] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   return (
     <div>
@@ -69,9 +70,9 @@ export const MyNavbar = () => {
               placeholder="Ticker"
               className="me-2 search-query"
               aria-label="Search"
+              onFocus={() => setIsOpen(true)}
               onChange={(e) => {
                 const value = e.target.value;
-                setInputValue(value);
                 const filtered = tickers.filter(
                   (ticker) =>
                     ticker.toLowerCase().includes(value.toLowerCase()) &&
@@ -80,7 +81,7 @@ export const MyNavbar = () => {
                 setFilteredSuggestions(filtered.slice(0, 10));
               }}
             />
-            {showTickers(filteredSuggestions)}
+            {isOpen && showTickers(filteredSuggestions)}
           </Form>
 
           <Navbar.Collapse id="navbarScroll">
