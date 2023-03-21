@@ -46,7 +46,7 @@ export const MyNavbar = () => {
 
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   return (
-    <div>
+    <div className="myNavbarContainer">
       <Navbar className="myNavbar">
         <Container fluid style={{ backgroundColor: "transparent" }}>
           <Navbar.Brand href="#">
@@ -115,7 +115,9 @@ export const MyNavbar = () => {
           </div>
         </Container>
       </Navbar>
-      <Outlet></Outlet>
+      <div className="outlet">
+        <Outlet></Outlet>
+      </div>
     </div>
   );
 };

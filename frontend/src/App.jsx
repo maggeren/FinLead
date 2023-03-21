@@ -4,6 +4,7 @@ import { NotFound } from "./pages/NotFound";
 import { MyNavbar } from "./components/Navbar";
 import Stock from "./pages/Stock";
 import React from "react";
+import { Spinner } from "./components/Spinner";
 
 const router = createBrowserRouter([
   {
@@ -13,15 +14,14 @@ const router = createBrowserRouter([
     children: [
       { path: "stock/:ticker", element: <Stock></Stock> },
       { path: "about", element: <h1>About</h1> },
+      { path: "spinner", element: <Spinner /> },
     ],
   },
 ]);
 
 function App() {
   return (
-    <div>
-      <RouterProvider router={router}></RouterProvider>
-    </div>
+    <RouterProvider router={router} fallbackElement={Spinner}></RouterProvider>
   );
 }
 
