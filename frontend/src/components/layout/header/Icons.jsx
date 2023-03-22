@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleInfo,
+  faBell,
   faComment,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ export const Icons = () => {
   return (
     <div className="icon-container">
       <Nav.Link className="nav-icon">
-        <FontAwesomeIcon icon={faCircleInfo} />
+        <FontAwesomeIcon icon={faBell} />
       </Nav.Link>
       <Nav.Link className="nav-icon">
         <FontAwesomeIcon icon={faComment} />
