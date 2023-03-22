@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LineChart from "../components/LineChart";
+import LineChart from "../components/charts/LineChart";
 import { useParams } from "react-router-dom";
 const StockData = [
   {

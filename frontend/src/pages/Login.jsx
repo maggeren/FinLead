@@ -24,7 +24,7 @@ export const Login = (props) => {
       },
       body: JSON.stringify(inputs),
     });
-    console.log(response)
+    console.log(response);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
