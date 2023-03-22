@@ -1,15 +1,14 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Root } from "./pages/Root";
 import { NotFound } from "./pages/NotFound";
-import { MyNavbar } from "./components/Navbar";
 import Stock from "./pages/Stock";
 import React from "react";
-import { Spinner } from "./components/Spinner";
+import { Spinner } from "./components/shared/Spinner";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MyNavbar></MyNavbar>,
+    element: <Root></Root>,
     errorElement: <NotFound> </NotFound>,
     children: [
       { path: "stock/:ticker", element: <Stock></Stock> },
@@ -19,10 +18,10 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+function Routes() {
   return (
     <RouterProvider router={router} fallbackElement={Spinner}></RouterProvider>
   );
 }
 
-export default App;
+export default Routes;
