@@ -26,7 +26,7 @@ export const MyNavbar = () => {
       <ul className="dropdown-menu">
         {filteredTickers.map((ticker, index) => (
           <li key={index} onBlur={() => setIsOpen(false)}>
-            <Link to={"stock/" + ticker}>
+            <Link to={"stock/" + ticker} className="ticker-link">
               <p>{ticker}</p>
             </Link>
           </li>

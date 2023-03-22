@@ -112,6 +112,12 @@ form.form-search:before {
   z-index: 1000;
 }
 
+.ticker-link {
+  text-decoration: none;
+  color: black;
+  text-align: left;
+}
+
 input.search-query {
   padding-left: 26px;
   border: 1.5px solid black;
