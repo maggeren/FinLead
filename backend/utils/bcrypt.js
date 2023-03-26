@@ -25,6 +25,7 @@ export const hashPassword = (plaintextPassword) => __awaiter(void 0, void 0, voi
 export const comparePasswords = (plaintextPassword, hashedPassword) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield bcrypt.compare(plaintextPassword, hashedPassword);
+        console.log(result);
         return result;
     }
     catch (err) {

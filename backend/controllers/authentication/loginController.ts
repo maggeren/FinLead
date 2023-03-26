@@ -27,13 +27,25 @@ async function matchingPasswords(
   console.log("Nu går det galt!")
   let hashedPassword = ""
   try{
-  hashedPassword = (await getUserByEmail(email)).password;
-  console.log("Der eksisterede faktisk en bruger med mail", email)
-  
+  console.log(email);
+  console.log(plainTextPassword);
+  const user = await getUserByEmail(email);
+  console.log(user);
+  if(!user){
+   console.log("Ingen kendt bruger!");
+   console.log("User does not exist");
+   return false;
+  }
+  //hashedPassword = (await getUserByEmail(email)).password;
+  //console.log("Der eksisterede faktisk en bruger med mail", email)
+  //console.log("Værid af hashed password er", hashedPassword);
+  console.log(plainTextPassword === user.password);
+  return await comparePasswords(plainTextPassword, user.password);
   }
   catch(error){
     console.log("User does not exists", error);
   }
-  return await comparePasswords(plainTextPassword, hashedPassword);
+  console.log("Vi nåede herned!");
+  return false;
 }
 export const loginController = { loginUser, matchingPasswords, getUserByEmail };

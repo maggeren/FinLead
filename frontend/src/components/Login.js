@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import "../styles/login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +7,9 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import InputField from "./InputField";
 
 export const Login = (props) => {
+
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState({});
 
   const handleChange = (event) => {
@@ -29,7 +33,11 @@ export const Login = (props) => {
       throw new Error("Network response was not ok");
     }
     const responseData = await response.json();
-    console.log(responseData);
+    console.log(responseData)
+    if(response.ok){
+      navigate("/about");
+    };
+   
   };
 
   return (
@@ -46,11 +54,13 @@ export const Login = (props) => {
             type="email"
             value={inputs.value}
             onChange={handleChange}
+            name = "email"
           />
           <InputField
             type="password"
             value={inputs.value}
             onChange={handleChange}
+            name="password"
           />
           <div className="form-group mb-3" control-id="formBasicCheckbox">
             <p className="small">

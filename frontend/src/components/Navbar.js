@@ -16,6 +16,8 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import LRUCache from "lru-cache";
+import { ModalPopup } from "./ModalPopup";
+import { Login } from "./Login";
 
 const cache = new LRUCache({
   max: 5,
@@ -41,7 +43,9 @@ export const MyNavbar = () => {
   useEffect(() => {
     const cachedTickers = cache.get("tickers"); // try to get tickers from cache
     if (cachedTickers) {
+      console.log("cached tickers exists", cachedTickers);
       setTickers(cachedTickers);
+      console.log(cache);
       return;
     } else {
       fetch("/tickers.txt").then((response) => {
@@ -49,6 +53,8 @@ export const MyNavbar = () => {
           const tickersArr = text.split("\n");
           setTickers(tickersArr);
           cache.set("tickers", tickersArr); // store tickers in cache
+          console.log("Tickers set for ", tickersArr);
+          console.log(cache);
         });
       });
     }

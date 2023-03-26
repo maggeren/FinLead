@@ -1,9 +1,10 @@
 import { ModalPopup } from "../components/ModalPopup";
+import {Login } from "../components/Login"
 
 export const Root = () => {
   return (
     <div>
-      <ModalPopup />
+      <Login></Login>
     </div>
   );
 };

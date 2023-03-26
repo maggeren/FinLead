@@ -34,13 +34,26 @@ function matchingPasswords(email, plainTextPassword) {
         console.log("Nu går det galt!");
         let hashedPassword = "";
         try {
-            hashedPassword = (yield getUserByEmail(email)).password;
-            console.log("Der eksisterede faktisk en bruger med mail", email);
+            console.log(email);
+            console.log(plainTextPassword);
+            const user = yield getUserByEmail(email);
+            console.log(user);
+            if (!user) {
+                console.log("Ingen kendt bruger!");
+                console.log("User does not exist");
+                return false;
+            }
+            //hashedPassword = (await getUserByEmail(email)).password;
+            //console.log("Der eksisterede faktisk en bruger med mail", email)
+            //console.log("Værid af hashed password er", hashedPassword);
+            console.log(plainTextPassword === user.password);
+            return yield comparePasswords(plainTextPassword, user.password);
         }
         catch (error) {
             console.log("User does not exists", error);
         }
-        return yield comparePasswords(plainTextPassword, hashedPassword);
+        console.log("Vi nåede herned!");
+        return false;
     });
 }
 export const loginController = { loginUser, matchingPasswords, getUserByEmail };

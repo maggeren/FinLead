@@ -6,7 +6,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const closedEye = <FontAwesomeIcon icon={faEyeSlash}/>;
 
-function InputField({ type, value, onChange }) {
+function InputField({ type, value, onChange, name }) {
 
     const[values, setValues] = useState({
         inputType: type,
@@ -27,7 +27,7 @@ function InputField({ type, value, onChange }) {
     } 
     return (
       <div style={{ position: "relative !important" }}>
-        <input type={values.inputType} placeholder={type} value={value} onChange={onChange} />
+        <input type={values.inputType} placeholder={type} value={value} onChange={onChange} name={name}  />
         {type === "password" && 
         <InlineImage className = "eye" name="eye" clickEvent={handleClick} image={values.image} 
           
