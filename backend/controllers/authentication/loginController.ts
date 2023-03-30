@@ -20,6 +20,19 @@ async function getUserByEmail(email: string): Promise<any> {
   return await User.findOne({ email: email });
 }
 
+const isLoggedIn = (req:any, res:any, next:any) => {
+     if(req.isAuthenticated()) return next();
+     else{
+      res.status(400).json("You must be logged in to access this features")
+     }
+};
+
+const logutUser = async (req: any, res: any) =>{
+    req.logout((err:string)=>{
+      if(!err) res.redirect("/home")
+    })
+}
+
 async function matchingPasswords(
   email: string,
   plainTextPassword: string
@@ -48,4 +61,4 @@ async function matchingPasswords(
   console.log("Vi nåede herned!");
   return false;
 }
-export const loginController = { loginUser, matchingPasswords, getUserByEmail };
+export const loginController = { loginUser, matchingPasswords, getUserByEmail, };
