@@ -1,15 +1,20 @@
+import "../index.css";
 import { ModalPopup } from "../components/ModalPopup";
 import { Header } from "../components/layout/header/Header";
 import { Footer } from "../components/layout/footer/Footer";
 import { Outlet } from "react-router-dom";
 export const Root = () => {
   return (
-    <div>
-      <Header />
-      <div className="outlet">
+    <div className="page">
+      <div className="header">
+        <Header />
+      </div>
+      <div className="content">
         <Outlet></Outlet>
       </div>
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 };
