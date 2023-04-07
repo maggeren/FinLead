@@ -7,9 +7,9 @@ export const SearchBar = () => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   useEffect(() => {
-    fetch("/tickers.txt").then((response) => {
+    fetch("/tickers.json").then((response) => {
       response.text().then((text) => {
-        const tickersArr = text.split("\n");
+        const tickersArr = JSON.parse(text);
         setTickers(tickersArr);
       });
     });
@@ -42,7 +42,8 @@ export const SearchBar = () => {
           const value = e.target.value;
           const filtered = tickers.filter(
             (ticker) =>
-              ticker.toLowerCase().includes(value.toLowerCase()) && value !== ""
+              ticker.Ticker.toLowerCase().includes(value.toLowerCase()) &&
+              value !== ""
           );
           setFilteredSuggestions(filtered.slice(0, 10));
         }}
