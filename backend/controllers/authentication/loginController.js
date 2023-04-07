@@ -16,9 +16,13 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password: plainTextPassword } = req.body;
         console.log("Plain text er ", plainTextPassword);
         const user = yield matchingPasswords(email, plainTextPassword);
-        user
-            ? res.status(200).json("Succesful")
-            : res.status(400).json("Access denied");
+        if (user) {
+            req.session.user = user; // store user object in session
+            res.status(200).json("Succesfull");
+        }
+        else {
+            res.status(400).json("Access denied!");
+        }
     }
     catch (err) {
         console.log(err);
@@ -29,6 +33,20 @@ function getUserByEmail(email) {
         return yield User.findOne({ email: email });
     });
 }
+// const isLoggedIn = (req:any, res:any, next:any) => {
+//      if(req.isAuthenticated()){
+//       console.log("Du må godt logge ind!");
+//       return next();
+//      } 
+//      else{
+//       res.status(400).json("You must be logged in to access this features")
+//      }
+// };
+const logoutUser = (req, res) => {
+    req.session.destroy(() => {
+        res.status(200).json('Logged out!');
+    });
+};
 function matchingPasswords(email, plainTextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Nu går det galt!");
@@ -56,4 +74,4 @@ function matchingPasswords(email, plainTextPassword) {
         return false;
     });
 }
-export const loginController = { loginUser, matchingPasswords, getUserByEmail };
+export const loginController = { loginUser, matchingPasswords, getUserByEmail, logoutUser };
