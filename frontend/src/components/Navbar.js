@@ -19,6 +19,7 @@ import LRUCache from "lru-cache";
 import { ModalPopup } from "./ModalPopup";
 import { Login } from "./Login";
 import { LoginButton } from "./LoginButton";
+import AuthContext from "./AuthContext";
 
 const cache = new LRUCache({
   max: 5,
@@ -41,6 +42,8 @@ const showTickers = (filteredTickers) => {
 };
 
 export const MyNavbar = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
   useEffect(() => {
     const cachedTickers = cache.get("tickers"); // try to get tickers from cache
     if (cachedTickers) {
