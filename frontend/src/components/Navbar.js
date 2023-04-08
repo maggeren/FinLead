@@ -18,6 +18,7 @@ import {
 import LRUCache from "lru-cache";
 import { ModalPopup } from "./ModalPopup";
 import { Login } from "./Login";
+import { LoginButton } from "./LoginButton";
 
 const cache = new LRUCache({
   max: 5,
@@ -139,6 +140,7 @@ export const MyNavbar = () => {
           </div>
         </Container>
       </Navbar>
+      <LoginButton></LoginButton>
       <Outlet></Outlet>
     </div>
   );

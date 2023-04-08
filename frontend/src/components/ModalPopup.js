@@ -1,16 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { useNavigate } from 'react-router-dom';
 import InputField from "./InputField";
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/Button"
 import "../styles/login.css";
+import AuthContext from "./AuthContext";
 
 export const ModalPopup=(props)=>{
    const [show, setShow] = useState(false);
   // const year = new Date().getFullYear()
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
@@ -46,6 +47,7 @@ export const ModalPopup=(props)=>{
       // }
     }
     else{
+      setIsLoggedIn(true);
       const responseData = await response.json();
       console.log(responseData)
       navigate("/about");
@@ -55,7 +57,7 @@ export const ModalPopup=(props)=>{
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
+        Login
       </Button>
 
       <Modal
