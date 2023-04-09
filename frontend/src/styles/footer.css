@@ -1,0 +1,52 @@
+footer {
+  background-color: rgb(23, 22, 22);
+  display: flex;
+  justify-content: space-around;
+}
+
+.title {
+  margin-top: 1rem;
+  color: white;
+  display: inline-block;
+  width: 100%;
+  font-weight: 500;
+  text-align: left;
+}
+.social-icon {
+  color: white;
+  font-size: 1.7rem;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+.facebook :hover {
+  color: rgb(59, 89, 152);
+}
+.twitter :hover {
+  color: rgb(29, 161, 242);
+}
+.instagram:hover {
+  color: rgb(225, 48, 108);
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 150;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.footer-ul {
+  list-style-type: none;
+  text-indent: -1.9rem;
+  text-align: left;
+}

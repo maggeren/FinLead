@@ -1,10 +1,20 @@
+import "../index.css";
 import { ModalPopup } from "../components/ModalPopup";
-import {Login } from "../components/Login"
-
+import { Header } from "../components/layout/header/Header";
+import { Footer } from "../components/layout/footer/Footer";
+import { Outlet } from "react-router-dom";
 export const Root = () => {
   return (
-    <div>
-      <Login></Login>
+    <div className="page">
+      <div className="header">
+        <Header />
+      </div>
+      <div className="content">
+        <Outlet></Outlet>
+      </div>
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 };
