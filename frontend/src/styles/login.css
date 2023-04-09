@@ -157,3 +157,7 @@ input.search-query {
 .text-danger {
   color: red;
 }
+
+.logout-button{
+  margin: 0 41%;
+}

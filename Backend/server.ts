@@ -21,19 +21,26 @@ app.use(express.urlencoded({ extended: true }));
 // });
 const corsOptions = {
   origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true
 };
 app.use(cors(corsOptions));
 app.use(session({
   secret: 'mysecret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 360000, // expires in 1 hour
+    sameSite: true,
+    secure: true // set to true if using HTTPS
+  }
 }));
 
 //_________ROUTES_________
 app.all("/api/register", routes.registerRouter);
 app.all("/api/login", routes.loginRouter);
 app.all("/api/logout", routes.loginRouter);
+app.all("/api/checkLogin", routes.loginRouter);
 app.all("/api/comment", routes.authenticateRouter)
 //________________________
 const server = app.listen(PORT, () =>

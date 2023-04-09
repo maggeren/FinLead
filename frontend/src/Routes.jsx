@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Root } from "./pages/Root";
 import { NotFound } from "./pages/NotFound";
 import Stock from "./pages/Stock";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AuthContext from "./components/AuthContext";
 import { Spinner } from "./components/shared/Spinner";
 const router = createBrowserRouter([
@@ -20,7 +20,31 @@ const router = createBrowserRouter([
 ]);
 
 function Routes() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(AuthContext);
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/checkLogin', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+          localStorage.removeItem('token');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      checkLoggedIn();
+    }
+  }, []);
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <RouterProvider

@@ -42,3 +42,7 @@ code {
   position: relative;
   bottom: 0;
   }
+
+  .left-header{
+    margin: 0 5%;
+  }

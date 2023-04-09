@@ -16,8 +16,6 @@ export const ModalPopup=(props)=>{
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
 
   const handleChange = (event) => {
@@ -38,11 +36,13 @@ export const ModalPopup=(props)=>{
         "Content-Type": "application/json",
       },
       body: JSON.stringify(inputs),
+      credentials: 'include', // Add this line
     });
     if(response.ok){
       setIsLoggedIn(true);
       const responseData = await response.json();
       console.log(responseData)
+      localStorage.setItem('token', responseData.token); // store the token in local storage
       //navigate("/about");
       setError("");
       handleClose();
@@ -57,11 +57,11 @@ export const ModalPopup=(props)=>{
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: 'include', // Add this line
           });
           if(response.ok){
             setIsLoggedIn(false);
-            const responseData = await response.json();
-            console.log(responseData)
+            localStorage.removeItem("token");
           }
   }
    

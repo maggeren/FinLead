@@ -21,6 +21,15 @@ const loginUser = async (req: any, res: any) => {
   }
 };
 
+const checkIsLoggedIn = async(req:any, res:any)=>{ 
+    if(req.session && req.session.user){
+      res.status(200).json({isLoggedIn: true})
+    }
+    else{
+      res.status(401).json({isLoggedIn: false})
+    }
+}
+
 async function getUserByEmail(email: string): Promise<any> {
   return await User.findOne({ email: email });
 }
@@ -37,6 +46,7 @@ async function getUserByEmail(email: string): Promise<any> {
 
 const logoutUser = (req:any, res:any) => {
   req.session.destroy(() => { //sessions gets destroyed and the user's session cookie is cleared as well.
+    res.clearCookie('connect.sid', { path: '/' })
     res.status(200).json('Logged out!');
   });
 };
@@ -69,4 +79,4 @@ async function matchingPasswords(
   console.log("Vi nåede herned!");
   return false;
 }
-export const loginController = { loginUser, matchingPasswords, getUserByEmail, logoutUser};
+export const loginController = { loginUser, matchingPasswords, getUserByEmail, logoutUser, checkIsLoggedIn};
