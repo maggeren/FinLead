@@ -23,20 +23,33 @@ export const ModalPopup=(props)=>{
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
+    console.log(name)
+    console.log(value);
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-    const method = isLoggedIn ? "logout": "login"
-    const response = await fetch(`http://localhost:4000/api/${method}`, {
+    const response = null;
+    if(!isLoggedIn){   
+    response = await fetch(`http://localhost:4000/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(inputs),
     });
+  }
+  else{
+    const response = await fetch("http://localhost:4000/api/logout",  {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+           // body: JSON.stringify(inputs),
+          });
+  }
     console.log(response)
     if (!response.ok) {
       setError("Invalid email or password!");
