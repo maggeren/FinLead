@@ -23,8 +23,7 @@ export const ModalPopup=(props)=>{
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log(name)
-    console.log(value);
+    console.log(event.target);
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
