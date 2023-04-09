@@ -4,7 +4,7 @@ import { NotFound } from "./pages/NotFound";
 import Stock from "./pages/Stock";
 import React, { useState } from "react";
 import AuthContext from "./components/AuthContext";
-import spinner from "./components/Spinner";
+import { Spinner } from "./components/shared/Spinner";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,7 +25,7 @@ function Routes() {
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <RouterProvider
         router={router}
-        fallbackElement={spinner}
+        fallbackElement={Spinner}
       ></RouterProvider>
     </AuthContext.Provider>
   );
