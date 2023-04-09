@@ -5,9 +5,15 @@ import Navbar from "react-bootstrap/Navbar";
 import { DropDown } from "./DropDown";
 import { Icons } from "./Icons";
 import { Sections } from "./Sections";
+import { LoginButton } from "../../LoginButton";
+import AuthContext from "../../AuthContext";
+import { useContext } from "react";
+import { ModalPopup } from "../../ModalPopup";
 
 export const Header = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   return (
+    <div>
     <Navbar className="myNavbar">
       <Container fluid style={{ backgroundColor: "transparent" }}>
         <div>
@@ -22,5 +28,7 @@ export const Header = () => {
         <Icons />
       </Container>
     </Navbar>
+    <ModalPopup></ModalPopup>
+    </div>
   );
 };

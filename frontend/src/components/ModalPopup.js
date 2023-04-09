@@ -12,6 +12,7 @@ export const ModalPopup=(props)=>{
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  console.log(isLoggedIn);
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
@@ -28,7 +29,8 @@ export const ModalPopup=(props)=>{
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-    const response = await fetch(`http://localhost:4000/api/login`, {
+    const method = isLoggedIn ? "logout": "login"
+    const response = await fetch(`http://localhost:4000/api/${method}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,11 +58,12 @@ export const ModalPopup=(props)=>{
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Login
-      </Button>
-
-      <Modal
+      {!isLoggedIn ? (
+        <div>
+        <Button variant="primary" onClick={handleShow}>
+             {isLoggedIn ? "Logout" : "Login"}
+        </Button>
+        <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -84,7 +87,7 @@ export const ModalPopup=(props)=>{
                 onChange={handleChange}
                 name="password"
               />
-              
+  
               <div className="form-group mb-3" control-id="formBasicCheckbox">
                 <p className="small">
                   <a className="text-primary" href="#!">
@@ -99,7 +102,7 @@ export const ModalPopup=(props)=>{
                 </button>
               </div>
             </form>
-
+  
             <div className="mt-3">
               <p className="mb-0  text-center">
                 Don't have an account? <br></br>
@@ -114,6 +117,16 @@ export const ModalPopup=(props)=>{
           </div>
         </Modal.Body>
       </Modal>
+      </div>
+      ) : (
+        <div>
+          <form onSubmit={handleSubmit}>
+            <Button type="submit">{isLoggedIn ? "Logout" : "Login"}</Button>
+          </form>
+        </div>
+      )}
+  
+      
     </>
   );
 
