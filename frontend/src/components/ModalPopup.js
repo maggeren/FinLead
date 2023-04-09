@@ -30,7 +30,7 @@ export const ModalPopup=(props)=>{
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-    const response = null;
+    let response = null;
     if(!isLoggedIn){   
     response = await fetch(`http://localhost:4000/api/login`, {
       method: "POST",
@@ -39,33 +39,32 @@ export const ModalPopup=(props)=>{
       },
       body: JSON.stringify(inputs),
     });
+    if(response.ok){
+      setIsLoggedIn(true);
+      const responseData = await response.json();
+      console.log(responseData)
+      //navigate("/about");
+      setError("");
+      handleClose();
+    }
+    else{
+      setError("Invalid email or password!");
+    }
   }
   else{
-    const response = await fetch("http://localhost:4000/api/logout",  {
+    response = await fetch("http://localhost:4000/api/logout",  {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-           // body: JSON.stringify(inputs),
           });
+          if(response.ok){
+            setIsLoggedIn(false);
+            const responseData = await response.json();
+            console.log(responseData)
+          }
   }
-    console.log(response)
-    if (!response.ok) {
-      setError("Invalid email or password!");
-      //throw new Error("Network response was not ok");
-      // const errorResponse = await response.json();
-      // if (errorResponse.message === "Incorrect email") {
-      //   setEmailError("Incorrect email");
-      // } else if (errorResponse.message === "Incorrect password") {
-      //   setPasswordError("Incorrect password");
-      // }
-    }
-    else{
-      setIsLoggedIn(true);
-      const responseData = await response.json();
-      console.log(responseData)
-      navigate("/about");
-    } 
+   
   };
 
   return (
@@ -133,7 +132,7 @@ export const ModalPopup=(props)=>{
       ) : (
         <div>
           <form onSubmit={handleSubmit}>
-            <Button type="submit">{isLoggedIn ? "Logout" : "Login"}</Button>
+            <Button type="submit" variant="primary">{isLoggedIn ? "Logout" : "Login"}</Button>
           </form>
         </div>
       )}

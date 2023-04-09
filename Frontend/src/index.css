@@ -32,13 +32,12 @@ code {
   position: absolute;
   width: 100%;
   top: 60px;
-  height: 100%;
+  height: calc(100% - 5vh);
   bottom: 50px;
 }
 
 .footer {
-  position: fixed;
+  margin-top: auto;
   width: 100%;
-  height: 10vh;
   bottom: 0;
 }
