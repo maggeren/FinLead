@@ -15,11 +15,7 @@
 }
 
 .myNavbar {
-  margin-top: 0.35rem;
-  margin-left: 7% !important;
-  margin-right: 7% !important;
   background-color: lightgray;
-  border-radius: 1rem;
 }
 
 .link-container {
@@ -31,7 +27,7 @@
 }
 
 .nav-logo {
-  height: 5vh;
+  height: 2vh;
 }
 
 .nav-icon {
@@ -111,19 +107,27 @@ form.form-search:before {
 .ticker-link {
   text-decoration: none;
   color: black;
-  text-align: left;
 }
 
+.ticker-link:hover {
+  color: black;
+}
+
+/* The search field when it gets focus/clicked on */
+.ticker {
+  font-weight: bold;
+  display: inline;
+}
+.companyName {
+  display: inline;
+}
+
+li {
+  text-align: left;
+  margin-left: 1vh;
+}
 input.search-query {
   padding-left: 26px;
   border: 1.5px solid black;
   box-shadow: 0px 2px 10px #888888;
-}
-
-.outlet {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
 }

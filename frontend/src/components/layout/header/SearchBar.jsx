@@ -7,22 +7,24 @@ export const SearchBar = () => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
   useEffect(() => {
-    fetch("/tickers.txt").then((response) => {
+    fetch("/tickers.json").then((response) => {
       response.text().then((text) => {
-        const tickersArr = text.split("\n");
-        setTickers(tickersArr);
+        const tickersArr = JSON.parse(text);
+
+        setTickers(Array.from(tickersArr));
       });
     });
-  });
+  }, []);
 
   const showTickers = (filteredTickers) => {
     if (filteredTickers.length === 0) return null;
     return (
       <ul className="dropdown-menu">
-        {filteredTickers.map((ticker, index) => (
+        {filteredSuggestions.map((ticker, index) => (
           <li key={index} onBlur={() => setIsOpen(false)}>
-            <Link to={"stock/" + ticker} className="ticker-link">
-              <p>{ticker}</p>
+            <Link to={"stock/" + ticker.Ticker} className="ticker-link">
+              <p className="ticker">{ticker.Ticker} </p>
+              <p className="companyName">{ticker.CompanyName}</p>
             </Link>
           </li>
         ))}
@@ -42,7 +44,8 @@ export const SearchBar = () => {
           const value = e.target.value;
           const filtered = tickers.filter(
             (ticker) =>
-              ticker.toLowerCase().includes(value.toLowerCase()) && value !== ""
+              ticker.Ticker.toLowerCase().includes(value.toLowerCase()) &&
+              value !== ""
           );
           setFilteredSuggestions(filtered.slice(0, 10));
         }}
