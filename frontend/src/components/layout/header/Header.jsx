@@ -29,6 +29,7 @@ export const Header = () => {
       </Container>
     </Navbar>
     <ModalPopup></ModalPopup>
+ 
     </div>
   );
 };

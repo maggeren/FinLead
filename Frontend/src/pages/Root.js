@@ -8,8 +8,25 @@ export const Root = () => {
     <div className="page">
       <div className="header">
         <Header />
-      </div>
+      </div>      
       <div className="content">
+      <div>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+        <h1>dfsfsd</h1>
+      </div>
         <Outlet></Outlet>
       </div>
       <div className="footer">

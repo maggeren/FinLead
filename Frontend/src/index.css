@@ -15,6 +15,10 @@ code {
     monospace;
 }
 
+#root{
+  min-height: calc(100vh - 80px);
+}
+
 .header {
   position: fixed;
   width: 100%;
@@ -29,15 +33,12 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  height: 100vh;
+  }
+  
+  .footer {
   width: 100%;
-  top: 60px;
-  height: calc(100% - 5vh);
-  bottom: 50px;
-}
-
-.footer {
-  margin-top: auto;
-  width: 100%;
+  flex-shrink: 0;
+  position: relative;
   bottom: 0;
-}
+  }
