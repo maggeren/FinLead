@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, Router, Route, Outlet } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -144,6 +144,7 @@ export const MyNavbar = () => {
         </Container>
       </Navbar>
       <LoginButton></LoginButton>
+      <ModalPopup></ModalPopup>
       <Outlet></Outlet>
     </div>
   );
