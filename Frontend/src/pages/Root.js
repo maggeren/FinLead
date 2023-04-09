@@ -9,24 +9,7 @@ export const Root = () => {
       <div className="header">
         <Header />
       </div>      
-      <div className="content">
-      <div>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-        <h1>dfsfsd</h1>
-      </div>
+      <div className="content">z
         <Outlet></Outlet>
       </div>
       <div className="footer">
