@@ -16,9 +16,13 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password: plainTextPassword } = req.body;
         console.log("Plain text er ", plainTextPassword);
         const user = yield matchingPasswords(email, plainTextPassword);
-        user
-            ? res.status(200).json("Succesful")
-            : res.status(400).json("Access denied");
+        if (user) {
+            req.session.user = user; // store user object in session
+            res.status(200).json("Succesfull");
+        }
+        else {
+            res.status(400).json("Access denied!");
+        }
     }
     catch (err) {
         console.log(err);
@@ -29,18 +33,45 @@ function getUserByEmail(email) {
         return yield User.findOne({ email: email });
     });
 }
+// const isLoggedIn = (req:any, res:any, next:any) => {
+//      if(req.isAuthenticated()){
+//       console.log("Du må godt logge ind!");
+//       return next();
+//      } 
+//      else{
+//       res.status(400).json("You must be logged in to access this features")
+//      }
+// };
+const logoutUser = (req, res) => {
+    req.session.destroy(() => {
+        res.status(200).json('Logged out!');
+    });
+};
 function matchingPasswords(email, plainTextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Nu går det galt!");
         let hashedPassword = "";
         try {
-            hashedPassword = (yield getUserByEmail(email)).password;
-            console.log("Der eksisterede faktisk en bruger med mail", email);
+            console.log(email);
+            console.log(plainTextPassword);
+            const user = yield getUserByEmail(email);
+            console.log(user);
+            if (!user) {
+                console.log("Ingen kendt bruger!");
+                console.log("User does not exist");
+                return false;
+            }
+            //hashedPassword = (await getUserByEmail(email)).password;
+            //console.log("Der eksisterede faktisk en bruger med mail", email)
+            //console.log("Værid af hashed password er", hashedPassword);
+            console.log(plainTextPassword === user.password);
+            return yield comparePasswords(plainTextPassword, user.password);
         }
         catch (error) {
             console.log("User does not exists", error);
         }
-        return yield comparePasswords(plainTextPassword, hashedPassword);
+        console.log("Vi nåede herned!");
+        return false;
     });
 }
-export const loginController = { loginUser, matchingPasswords, getUserByEmail };
+export const loginController = { loginUser, matchingPasswords, getUserByEmail, logoutUser };

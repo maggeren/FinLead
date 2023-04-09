@@ -89,3 +89,69 @@ input {
   display: flex;
   margin-right: 5%;
 }
+
+.navBar-link {
+  margin: 0 20% !important;
+}
+
+.link-container {
+  margin-left: 18%;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.nav-logo {
+  height: 5vh;
+}
+
+.nav-icon {
+  margin-left: 2rem;
+}
+
+.nav-item {
+  margin-right: 1rem;
+}
+
+/*svg images inside the .nav-icon*/
+.nav-icon svg {
+  height: 2.5em !important;
+  margin: 0 3% !important;
+}
+
+.nav-icon svg :hover {
+  opacity: 0.6;
+}
+
+/* .search-bar{
+  margin-left: 2%;
+} */
+
+form.form-search {
+  position: relative;
+}
+
+form.form-search:before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-image: url(http://getbootstrap.com/2.3.2/assets/img/glyphicons-halflings.png);
+  background-position: -48px 0;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  opacity: 0.5;
+  z-index: 1000;
+}
+
+input.search-query {
+  padding-left: 26px;
+  border: 1.5px solid black;
+  box-shadow: 0px 2px 10px #888888;
+}
+
+.text-danger {
+  color: red;
+}
