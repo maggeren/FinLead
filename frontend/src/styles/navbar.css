@@ -107,9 +107,25 @@ form.form-search:before {
 .ticker-link {
   text-decoration: none;
   color: black;
-  text-align: left;
 }
 
+.ticker-link:hover {
+  color: black;
+}
+
+/* The search field when it gets focus/clicked on */
+.ticker {
+  font-weight: bold;
+  display: inline;
+}
+.companyName {
+  display: inline;
+}
+
+li {
+  text-align: left;
+  margin-left: 1vh;
+}
 input.search-query {
   padding-left: 26px;
   border: 1.5px solid black;

@@ -10,19 +10,21 @@ export const SearchBar = () => {
     fetch("/tickers.json").then((response) => {
       response.text().then((text) => {
         const tickersArr = JSON.parse(text);
-        setTickers(tickersArr);
+
+        setTickers(Array.from(tickersArr));
       });
     });
-  });
+  }, []);
 
   const showTickers = (filteredTickers) => {
     if (filteredTickers.length === 0) return null;
     return (
       <ul className="dropdown-menu">
-        {filteredTickers.map((ticker, index) => (
+        {filteredSuggestions.map((ticker, index) => (
           <li key={index} onBlur={() => setIsOpen(false)}>
-            <Link to={"stock/" + ticker} className="ticker-link">
-              <p>{ticker}</p>
+            <Link to={"stock/" + ticker.Ticker} className="ticker-link">
+              <p className="ticker">{ticker.Ticker} </p>
+              <p className="companyName">{ticker.CompanyName}</p>
             </Link>
           </li>
         ))}
