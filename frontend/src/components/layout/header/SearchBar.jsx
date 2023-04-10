@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useMatches } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+
 export const SearchBar = () => {
   const [tickers, setTickers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,13 @@ export const SearchBar = () => {
       <ul className="dropdown-menu">
         {filteredSuggestions.map((ticker, index) => (
           <li key={index} onBlur={() => setIsOpen(false)}>
-            <Link to={"stock/" + ticker.Ticker} className="ticker-link">
+            <Link
+              to={"stock/" + ticker.Ticker}
+              className="ticker-link"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
               <p className="ticker">{ticker.Ticker} </p>
               <p className="companyName">{ticker.CompanyName}</p>
             </Link>
@@ -44,8 +51,8 @@ export const SearchBar = () => {
           const value = e.target.value;
           const filtered = tickers.filter(
             (ticker) =>
-              ticker.Ticker.toLowerCase().includes(value.toLowerCase()) &&
-              value !== ""
+              ticker.Ticker.substring(0, value.length).toLowerCase() ===
+                value.toLowerCase() && value.length > 0
           );
           setFilteredSuggestions(filtered.slice(0, 10));
         }}
