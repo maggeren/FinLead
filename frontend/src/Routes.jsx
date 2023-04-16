@@ -4,6 +4,8 @@ import { NotFound } from "./pages/NotFound";
 import Stock from "./pages/Stock";
 import React from "react";
 import { Spinner } from "./components/shared/Spinner";
+import { Register } from "./pages/Register";
+
 
 const router = createBrowserRouter([
   {
@@ -14,6 +16,7 @@ const router = createBrowserRouter([
       { path: "stock/:ticker", element: <Stock></Stock> },
       { path: "about", element: <h1>About</h1> },
       { path: "spinner", element: <Spinner /> },
+      { path: "register", element: <Register/>},
     ],
   },
 ]);
