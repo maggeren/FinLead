@@ -3,8 +3,8 @@
     "baseUrl": ".",
     "target": "es6",
     "strict": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
     "noImplicitReturns": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
