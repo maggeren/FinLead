@@ -17,12 +17,22 @@ export const CommentField=() =>{
        }
     }
 
+    const handleSumbit = async(event) =>{
+       event.preventDefault();
+       
+    }
+
     return (
         <>
             <div style={{backgroundColor:"lightblue"}}>
              <button onClick={handleClick}>Comment</button>
              {isExpanded &&(
-                    <textarea placeholder="write your comment here..."></textarea>
+                   <div>
+                    <form>
+                    <textarea name="content" placeholder="write your comment here..."></textarea>
+                    <button type="submit"></button>
+                    </form>
+                    </div>
                     )
                 }
             {modalVisible && (
