@@ -30,8 +30,12 @@ export const SearchBar = () => {
                 setIsOpen(false);
               }}
             >
+              {index !== 0 && <hr />}
+              <div>
               <p className="ticker">{ticker.Ticker} </p>
+              <br></br>
               <p className="companyName">{ticker.CompanyName}</p>
+              </div>
             </Link>
           </li>
         ))}

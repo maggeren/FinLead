@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,13 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerController = void 0;
-const User_js_1 = __importDefault(require("../../models/User.js"));
-const bcrypt_js_1 = require("../../utils/bcrypt.js");
+import User from "../../models/User.js";
+import { hashPassword } from "../../utils/bcrypt.js";
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(" KIG HER");
     console.log(req.params);
@@ -30,8 +24,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         console.log("Bruger allerede i brug");
         return res.status(409).json("Username allready exist");
     }
-    const hashedPassword = yield (0, bcrypt_js_1.hashPassword)(password);
-    const newUser = new User_js_1.default({
+    const hashedPassword = yield hashPassword(password);
+    const newUser = new User({
         userName: userName,
         email: email,
         password: hashedPassword,
@@ -42,12 +36,12 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 function getUserByEmail(email) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield User_js_1.default.findOne({ email: email });
+        return yield User.findOne({ email: email });
     });
 }
 function getUserByUserName(userName) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield User_js_1.default.findOne({ userName: userName });
+        return yield User.findOne({ userName: userName });
     });
 }
-exports.registerController = { registerUser };
+export const registerController = { registerUser };
