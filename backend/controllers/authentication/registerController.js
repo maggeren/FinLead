@@ -10,8 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import User from "../../models/User.js";
 import { hashPassword } from "../../utils/bcrypt.js";
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(" KIG HER");
+    console.log(req.params);
     const { email, password, userName } = req.body;
     console.log({ email, password });
+    const exists = yield getUserByEmail(email);
+    const userNameExists = yield getUserByUserName(userName);
+    if (exists) {
+        console.log("Email allerede i brug");
+        return res.status(409).json("Email allready exist");
+    }
+    else if (userNameExists) {
+        console.log("Bruger allerede i brug");
+        return res.status(409).json("Username allready exist");
+    }
     const hashedPassword = yield hashPassword(password);
     const newUser = new User({
         userName: userName,
@@ -22,4 +34,14 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     newUser.save();
     res.status(200).json("New User Added!");
 });
+function getUserByEmail(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield User.findOne({ email: email });
+    });
+}
+function getUserByUserName(userName) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield User.findOne({ userName: userName });
+    });
+}
 export const registerController = { registerUser };

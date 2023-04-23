@@ -5,6 +5,9 @@ import Stock from "./pages/Stock";
 import React, { useState, useEffect } from "react";
 import AuthContext from "./components/AuthContext";
 import { Spinner } from "./components/shared/Spinner";
+import { Register } from "./pages/Register";
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +18,7 @@ const router = createBrowserRouter([
       { path: "stock/:ticker", element: <Stock></Stock> },
       { path: "about", element: <h1>About</h1> },
       { path: "spinner", element: <Spinner /> },
+      { path: "register", element: <Register/>},
     ],
   },
 ]);

@@ -43,6 +43,33 @@ export const SearchBar = () => {
     };
   }, []);
 
+
+  const showTickers = (filteredTickers) => {
+    if (filteredTickers.length === 0) return null;
+    return (
+      <ul className="dropdown-menu">
+        {filteredSuggestions.map((ticker, index) => (
+          <li key={index} onBlur={() => setIsOpen(false)}>
+            <Link
+              to={"stock/" + ticker.Ticker}
+              className="ticker-link"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+             {index !== 0 && <hr />}
+              <div>
+              <p className="ticker">{ticker.Ticker} </p>
+              <br></br>
+              <p className="companyName">{ticker.CompanyName}</p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <Form className=" search-bar form-search form-inline">
       <Form.Control
