@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import "../styles/login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +7,13 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import InputField from "./InputField";
 
 export const Login = (props) => {
+
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState({});
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -26,10 +33,20 @@ export const Login = (props) => {
     });
     console.log(response);
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      setError("Invalid email or password!");
+      //throw new Error("Network response was not ok");
+      // const errorResponse = await response.json();
+      // if (errorResponse.message === "Incorrect email") {
+      //   setEmailError("Incorrect email");
+      // } else if (errorResponse.message === "Incorrect password") {
+      //   setPasswordError("Incorrect password");
+      // }
     }
-    const responseData = await response.json();
-    console.log(responseData);
+    else{
+      const responseData = await response.json();
+      console.log(responseData)
+      navigate("/about");
+    } 
   };
 
   return (
@@ -46,12 +63,15 @@ export const Login = (props) => {
             type="email"
             value={inputs.value}
             onChange={handleChange}
+            name = "email"
           />
           <InputField
             type="password"
             value={inputs.value}
             onChange={handleChange}
+            name="password"
           />
+          
           <div className="form-group mb-3" control-id="formBasicCheckbox">
             <p className="small">
               <a className="text-primary" href="#!">
@@ -59,6 +79,7 @@ export const Login = (props) => {
               </a>
             </p>
           </div>
+          {error && <p className="text-danger">{error}</p>}
           <div className="d-flex justify-content-center">
             <button className="btn btn" type="submit">
               Login
