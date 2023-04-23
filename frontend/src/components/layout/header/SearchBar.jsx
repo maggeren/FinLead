@@ -30,7 +30,11 @@ export const SearchBar = () => {
                 setIsOpen(false);
               }}
             >
+<<<<<<< Updated upstream
               {index !== 0 && <hr />}
+=======
+             {index !== 0 && <hr />}
+>>>>>>> Stashed changes
               <div>
               <p className="ticker">{ticker.Ticker} </p>
               <br></br>
