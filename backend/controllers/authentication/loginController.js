@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import User from "../../models/User.js";
-import { comparePasswords } from "../../utils/bcrypt.js";
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Nu er vi startet! fra localhost 4000.");
     console.log(req.body);
@@ -45,15 +44,16 @@ function getUserByEmail(email) {
 //      if(req.isAuthenticated()){
 //       console.log("Du må godt logge ind!");
 //       return next();
-//      } 
+//      }
 //      else{
 //       res.status(400).json("You must be logged in to access this features")
 //      }
 // };
 const logoutUser = (req, res) => {
     req.session.destroy(() => {
-        res.clearCookie('connect.sid', { path: '/' });
-        res.status(200).json('Logged out!');
+        //sessions gets destroyed and the user's session cookie is cleared as well.
+        res.clearCookie("connect.sid", { path: "/" });
+        res.status(200).json("Logged out!");
     });
 };
 function matchingPasswords(email, plainTextPassword) {
@@ -61,20 +61,8 @@ function matchingPasswords(email, plainTextPassword) {
         console.log("Nu går det galt!");
         let hashedPassword = "";
         try {
-            console.log(email);
-            console.log(plainTextPassword);
-            const user = yield getUserByEmail(email);
-            console.log(user);
-            if (!user) {
-                console.log("Ingen kendt bruger!");
-                console.log("User does not exist");
-                return false;
-            }
-            //hashedPassword = (await getUserByEmail(email)).password;
-            //console.log("Der eksisterede faktisk en bruger med mail", email)
-            //console.log("Værid af hashed password er", hashedPassword);
-            console.log(plainTextPassword === user.password);
-            return yield comparePasswords(plainTextPassword, user.password);
+            hashedPassword = (yield getUserByEmail(email)).password;
+            console.log("Der eksisterede faktisk en bruger med mail", email);
         }
         catch (error) {
             console.log("User does not exists", error);
@@ -83,4 +71,10 @@ function matchingPasswords(email, plainTextPassword) {
         return false;
     });
 }
-export const loginController = { loginUser, matchingPasswords, getUserByEmail, logoutUser, checkIsLoggedIn };
+export const loginController = {
+    loginUser,
+    matchingPasswords,
+    getUserByEmail,
+    logoutUser,
+    checkIsLoggedIn,
+};
