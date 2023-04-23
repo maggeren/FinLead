@@ -7,20 +7,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import redisClient from "../../server.js";
 import Ticker from "../../models/Ticker.js";
 function getStockDataFromDB(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        //get all the tickers from the database
-        console.log("called getstockdatafromdb");
-        const tickers = yield Ticker.find();
-        const tickerArray = tickers.map((ticker) => {
-            return {
-                ticker: ticker.ticker,
-                companyName: ticker.companyName,
-                sector: ticker.sector,
-            };
-        });
-        res.status(200).json(tickerArray);
+        const ticker = yield redisClient.get("tickers");
+        if (ticker) {
+            res.status(200).json(JSON.parse(ticker)); //send the tickers to the frontend
+        }
+        else {
+            const tickers = yield Ticker.find();
+            const tickerArray = tickers.map((ticker) => {
+                return {
+                    ticker: ticker.ticker,
+                    companyName: ticker.companyName,
+                    sector: ticker.sector,
+                };
+            });
+            yield redisClient.set("tickers", JSON.stringify(tickerArray), {
+                EX: 21600, // let key expire after 6 hours
+            });
+            res.status(200).json(tickerArray);
+        }
     });
 }
 export const searchBarController = { getStockDataFromDB };

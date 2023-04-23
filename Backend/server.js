@@ -1,8 +1,11 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
+import redis from "redis";
 import { routes } from "./routes/exports.js";
 import connectDB from "./config/db.js";
+const redisClient = redis.createClient();
+redisClient.connect();
 const PORT = process.env.PORT;
 connectDB();
 const app = express();
@@ -19,3 +22,4 @@ app.all("/api/login", routes.loginRouter);
 app.all("/api/searchbar", routes.searchBarRouter);
 //________________________
 const server = app.listen(PORT, () => console.log(`💻 Server  started on http://localhost:${PORT} 💻`));
+export default redisClient;
