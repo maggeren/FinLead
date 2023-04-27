@@ -8,16 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import User from "../../models/User.js";
+import jwt from "jsonwebtoken";
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Nu er vi startet! fra localhost 4000.");
     console.log(req.body);
     try {
         const { email, password: plainTextPassword } = req.body;
         console.log("Plain text er ", plainTextPassword);
-        const user = yield matchingPasswords(email, plainTextPassword);
-        if (user) {
-            req.session.user = user; // store user object in session. A cookie is set on the client side containing the session ID The client-side then sends this cookie back to the server with each subsequent request, allowing the server to identify the session and retrieve the corresponding session data.
-            res.status(200).json("Succesfull");
+        const userExists = yield matchingPasswords(email, plainTextPassword);
+        if (userExists) {
+            const user = yield getUserByEmail(email);
+            console.log(user);
+            const token = jwt.sign({ userName: user.userName }, "secretKey");
+            res.json({ token: token });
         }
         else {
             res.status(400).json("Access denied!");
@@ -61,8 +64,10 @@ function matchingPasswords(email, plainTextPassword) {
         console.log("Nu går det galt!");
         let hashedPassword = "";
         try {
+            let user = yield getUserByEmail(email);
+            console.log(user);
             hashedPassword = (yield getUserByEmail(email)).password;
-            console.log("Der eksisterede faktisk en bruger med mail", email);
+            return true;
         }
         catch (error) {
             console.log("User does not exists", error);

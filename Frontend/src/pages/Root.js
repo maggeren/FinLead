@@ -11,7 +11,6 @@ export const Root = () => {
         <Header />
       </div>      
       <div className="content">
-        <CommentField/>
         <Outlet></Outlet>
       </div>
       <div className="footer">

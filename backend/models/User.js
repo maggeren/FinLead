@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     createdAt: String,
+    //comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 });
 const User = mongoose.model("User", userSchema);
 export default User;

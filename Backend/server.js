@@ -2,11 +2,11 @@ import express from "express";
 import session from "express-session";
 import cors from "cors";
 import "dotenv/config";
-//import redis from "redis";
+import redis from "redis";
 import { routes } from "./routes/exports.js";
 import connectDB from "./config/db.js";
-//const redisClient = redis.createClient();
-//redisClient.connect();
+const redisClient = redis.createClient();
+redisClient.connect();
 const PORT = process.env.PORT;
 connectDB();
 const app = express();
@@ -35,6 +35,9 @@ app.all("/api/logout", routes.loginRouter);
 app.all("/api/checkLogin", routes.loginRouter);
 app.all("/api/comment", routes.authenticateRouter);
 app.all("/api/searchbar", routes.searchBarRouter);
+//getComments
+app.all("/api/postComment/:ticker", routes.commentRouter);
+app.all("/api/comments/:ticker", routes.commentRouter);
 //________________________
 const server = app.listen(PORT, () => console.log(`💻 Server  started on http://localhost:${PORT} 💻`));
-//export default redisClient;
+export default redisClient;
