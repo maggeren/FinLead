@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LineChart from "../components/charts/LineChart";
 import { CommentField } from "../components/CommentField";
+import { CommentBox } from "../components/CommentBox";
 import { useParams } from "react-router-dom";
 const StockData = [
   {
@@ -69,14 +70,16 @@ function Stock() {
   return (
     <div style={{ width: 700 }}>
       <LineChart chartData={chartData} ticker={ticker} />
-      <div>
-        <ul>
-          {comments.map((comment, index) =>(
-            <li>{comment.content}</li>
-          ))}
-        </ul>
-      </div>
       <CommentField ticker ={ticker} />
+      <br></br>
+      <div>
+          {comments.map((comment, index) =>(
+            <div key={index}>
+             <CommentBox  userName={comment.userReference} date={comment.createdAt} content={comment.content}/>
+             <br></br>
+             </div>
+          ))}
+      </div>     
     </div>
   );
 }

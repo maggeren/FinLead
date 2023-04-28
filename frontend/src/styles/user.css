@@ -1,0 +1,42 @@
+
+
+.user-pic-container{
+    width:10%;
+}
+
+
+
+.user-pic{
+    height: 3rem;
+    width: 3rem;
+    margin-top: 20%;
+    border-radius: 70%;
+}
+
+.comment-box{
+    background-color: lightgray;
+    border-radius: 5%; 
+    border: 1px solid black;
+}
+
+.flex-container{
+    position: relative;
+}
+
+.flex-container a{
+    text-decoration: none;
+    font-weight: bold;
+    color:black;
+    height: 25px;
+}
+
+.post-date{
+    position: absolute;
+    right: 5px;
+    top:0;
+}
+
+.post-content{
+    margin-left: 5%;
+    padding-top: 3%;
+}
