@@ -8,19 +8,19 @@ const saveComment = async(req: any, res:any) => {
     console.log("parametre er" + req.params);
     const tickerRef = req.params.ticker;
     console.log("tickerRef er " + tickerRef)
-    if (!req.headers.authorization) {
-        return res.status(401).json({ message: "Missing Authorization header" });
-      }
-    const token = req.headers.authorization.split(" ")[1]; // get the token from the Authorization header
-    const decodedToken = jwt.verify(token, "secretKey"); // decode the token using the secret key
-    console.log("afkoded token er " + decodedToken);
+    // if (!req.headers.authorization) {
+    //     return res.status(401).json({ message: "Missing Authorization header" });
+    //   }
+    // const token = req.headers.authorization.split(" ")[1]; // get the token from the Authorization header
+    // const decodedToken = jwt.verify(token, "secretKey"); // decode the token using the secret key
+    // console.log("afkoded token er " + decodedToken);
    // const userName = decodedToken.userName; // extract the user id from the token
    // console.log("Navn er " + userName);
     const comment = new Comment({
         content:content,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
-        userReference: "testkaj"
+        userReference: "Test Kaj"
     });
     comment.save();
     res.status(200).json("New user added")
@@ -31,6 +31,13 @@ const getComments = async(req:any, res:any) =>{
     const comments = await Comment.find({tickerReference: ticker});
     console.log(comments);
     res.status(200).json(comments);
+}
+
+const updateComment = async(req:any,res:any) =>{
+    const {content} = req.body;
+    console.log(content);
+    const commentToUpdate = Comment.findOne({content: content})
+    console.log(commentToUpdate);
 }
 
 export const commentController = {saveComment, getComments}

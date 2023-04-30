@@ -41,10 +41,15 @@ export const CommentField=(props) =>{
         body: JSON.stringify(commentObject),
        })
        if(response.ok){
-        console.log("Det lykkedes")
+        const responseData = await response.json();
+        console.log(responseData);
+        // Trigger re-render of Stock component by updating comments state
+        props.setComments((prevComments) => [...prevComments, responseData]);
        } else{
         console.log("Den gik sgu ikke");
        }
+       setExpanded(false);
+       setComment('');
     }
 
     return (

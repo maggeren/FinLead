@@ -23,6 +23,7 @@
     "react-bootstrap-button": "^1.0.3",
     "react-bootstrap-modal": "^4.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1"

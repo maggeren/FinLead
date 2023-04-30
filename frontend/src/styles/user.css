@@ -4,8 +4,6 @@
     width:10%;
 }
 
-
-
 .user-pic{
     height: 3rem;
     width: 3rem;
@@ -15,8 +13,9 @@
 
 .comment-box{
     background-color: lightgray;
-    border-radius: 5%; 
+    border-radius: 20%; 
     border: 1px solid black;
+    padding: 5% 0;
 }
 
 .flex-container{
