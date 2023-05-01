@@ -39,3 +39,9 @@
     margin-left: 5%;
     padding-top: 3%;
 }
+
+.post-like{
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+}

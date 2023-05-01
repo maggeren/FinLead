@@ -11,6 +11,8 @@ export const CommentBox =(props)=>{
   
   const [isEditField, setEditField] = useState(false);
 
+  const[likes, setLikes] = useState(props.likes);
+
   const handleUpdate = async(event)=>{
     event.preventDefault();
     console.log(content);
@@ -26,6 +28,14 @@ export const CommentBox =(props)=>{
        if(response.ok){
         console.log("Det gik godt!");
        }
+       else{
+        console.log("Response kom galt af sted!");
+       }
+  }
+
+  const incrementLike= (event)=>{
+     setLikes(likes +1);
+     console.log(likes);
   }
 
   const handleChange = (event) => {
@@ -51,9 +61,11 @@ export const CommentBox =(props)=>{
         ): (<p className="post-content">{content}</p>        
         )}     
         <span className="post-date">{props.date}</span>
+
         </div>
-        <button onClick={()=>setEditField(true)}>Edit</button>
-   
+        <button onClick={()=>setEditField(true)}>Edit</button>  
+        <span className="post-like" onClick={incrementLike}>{likes} </span>
+        <span>👍</span>
     </div>
   )
 }

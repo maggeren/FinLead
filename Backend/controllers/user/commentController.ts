@@ -20,7 +20,8 @@ const saveComment = async(req: any, res:any) => {
         content:content,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
-        userReference: "Test Kaj"
+        userReference: "Test Kaj",
+        likes: 0
     });
     comment.save();
     res.status(200).json("New user added")
@@ -34,10 +35,12 @@ const getComments = async(req:any, res:any) =>{
 }
 
 const updateComment = async(req:any,res:any) =>{
+    console.log("Så kører vi!");
     const {content} = req.body;
     console.log(content);
-    const commentToUpdate = Comment.findOne({content: content})
-    console.log(commentToUpdate);
+    Comment.updateOne({content: content}, {$set: {content: content}})
+    res.status(200).json("Comment updated with new content!")
+    
 }
 
-export const commentController = {saveComment, getComments}
+export const commentController = {saveComment, getComments, updateComment}

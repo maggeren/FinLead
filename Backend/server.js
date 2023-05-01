@@ -35,9 +35,10 @@ app.all("/api/logout", routes.loginRouter);
 app.all("/api/checkLogin", routes.loginRouter);
 app.all("/api/comment", routes.authenticateRouter);
 app.all("/api/searchbar", routes.searchBarRouter);
-//getComments
+//For comments
 app.all("/api/postComment/:ticker", routes.commentRouter);
 app.all("/api/comments/:ticker", routes.commentRouter);
+app.all("/api/updateComment", routes.commentRouter);
 //________________________
 const server = app.listen(PORT, () => console.log(`💻 Server  started on http://localhost:${PORT} 💻`));
 export default redisClient;

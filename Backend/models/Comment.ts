@@ -8,7 +8,8 @@ const commentSchema = new mongoose.Schema({
    },
    createdAt: String,
    tickerReference: String,
-   userReference: String
+   userReference: String,
+   likes: Number
 })
 
 const Comment = mongoose.model("Comment", commentSchema);

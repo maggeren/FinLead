@@ -27,7 +27,8 @@ const saveComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         content: content,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
-        userReference: "Test Kaj"
+        userReference: "Test Kaj",
+        likes: 0
     });
     comment.save();
     res.status(200).json("New user added");
@@ -38,4 +39,10 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     console.log(comments);
     res.status(200).json(comments);
 });
-export const commentController = { saveComment, getComments };
+const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { content } = req.body;
+    console.log(content);
+    Comment.updateOne({ content: content }, { $set: { content: content } });
+    res.status(200).json("Comment updated with new content!");
+});
+export const commentController = { saveComment, getComments, updateComment };

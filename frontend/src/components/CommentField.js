@@ -31,7 +31,7 @@ export const CommentField=(props) =>{
        const commentObject ={
          content: comment,
          user: "abe",
-         tickerRef: props.ticker
+         tickerRef: props.ticker,
        };
        response = await fetch(`http://localhost:4000/api/postComment/${props.ticker}`, {
         method: "POST",
