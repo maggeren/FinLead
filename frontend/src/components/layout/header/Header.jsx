@@ -26,10 +26,11 @@ export const Header = () => {
         <Sections />
         {isLoggedIn ? (
           <div className="left-header">
-        <Icons />
-        <LogOutButton/>
-        </div>
-        ): <ModalPopup/>}
+            <Icons />
+          </div>
+        ) : (
+          <ModalPopup />
+        )}
       </Container>
     </Navbar>
   );
