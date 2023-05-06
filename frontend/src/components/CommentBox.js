@@ -48,24 +48,32 @@ export const CommentBox =(props)=>{
 
   return (
     <div className="comment-box">     
-    <div className="d-flex flex-row flex-container">
-    <div className="p-2 inline-block user-pic-container">
+    
+    <div className="user-pic-container">
             <img className="user-pic" src="/userPicture.png"/>
+            
         </div>
-        <a style={{paddingLeft:"5px"}} href="#">{props.userName}</a>
+        <div className="post-content">
+        <a href="#">{props.userName}</a> 
         {isEditField ? (
           <form onSubmit={handleUpdate}>
            <textarea onChange={handleChange}>{content}</textarea>
            <button type="submit">Save</button>
            </form>
-        ): (<p className="post-content">{content}</p>        
-        )}     
-        <span className="post-date">{props.date}</span>
-
+        ): (<p className="">{content}</p>        
+        )}
         </div>
+        <div className="bottom-row">
+        {/* <span className="bottom-item">👍</span>     */}
+        <span className=" bottom-item post-like" onClick={incrementLike}>{likes} </span>
+        <span className="bottom-item">Reply</span> 
+        <span className="bottom-item post-date">{props.date}</span>
+        </div>
+        <hr></hr>
+        <div className="comment-options">        
         <button onClick={()=>setEditField(true)}>Edit</button>  
-        <span className="post-like" onClick={incrementLike}>{likes} </span>
-        <span>👍</span>
+        <button style={{marginLeft:"2%"}}>Delete</button>
+        </div>
     </div>
   )
 }
