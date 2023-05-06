@@ -1,10 +1,10 @@
 import express from "express";
 //import getUser from "../controllers/loginController";
 const loginRouter = express.Router();
-import { loginUser } from "../controllers/loginController";
+import { loginController } from "../controllers/authentication/loginController";
 
 loginRouter.post("/api/login", async (req, res) => {
-  await loginUser(req, res);
+  await loginController.loginUser(req, res);
 });
 
 export default loginRouter;
