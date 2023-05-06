@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import process from "process";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import TickerList from "./Tickerlist";
+
 export const SearchBar = () => {
+  const navigate = useNavigate();
   const [tickers, setTickers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [filteredTickers, setFilteredTickers] = useState([]);
@@ -36,57 +38,56 @@ export const SearchBar = () => {
 
     //adding event listener once SearchBar is mounted
     document.addEventListener("click", handleClickedOutside);
-
     //removing event listener once SearchBar is unmounted
     return () => {
       document.removeEventListener("click", handleClickedOutside);
     };
   }, []);
 
-
-  const showTickers = (filteredTickers) => {
-    if (filteredTickers.length === 0) return null;
-    return (
-      <ul className="dropdown-menu">
-        {filteredSuggestions.map((ticker, index) => (
-          <li key={index} onBlur={() => setIsOpen(false)}>
-            <Link
-              to={"stock/" + ticker.Ticker}
-              className="ticker-link"
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            >
-             {index !== 0 && <hr />}
-              <div>
-              <p className="ticker">{ticker.Ticker} </p>
-              <br></br>
-              <p className="companyName">{ticker.CompanyName}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
   return (
-    <Form className=" search-bar form-search form-inline">
+    <Form className="form-container">
       <Form.Control
         ref={refForm}
         type="search"
         placeholder="Ticker"
-        className="me-2 search-query"
+        className="search-bar"
         aria-label="Search"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && filteredTickers.length > 0) {
+            navigate(`stock/${filteredTickers[0].ticker}`);
+          }
+        }}
         onClick={() => setIsOpen(true)}
         onChange={(e) => {
           const value = e.target.value;
-          const filtered = tickers.filter(
-            (ticker) =>
-              ticker.ticker.substring(0, value.length).toLowerCase() ===
-                value.toLowerCase() && value.length > 0
-          );
-          setFilteredTickers(filtered.slice(0, 10));
+          const filtered =
+            value.length > 0
+              ? tickers.filter(
+                  (ticker) =>
+                    ticker.ticker.includes(value.toUpperCase()) ||
+                    ticker.companyName
+                      .toLowerCase()
+                      .includes(value.toLowerCase())
+                )
+              : [];
+
+          // const sortedFiltered = filtered.sort((a, b) => {
+          //   const aDist = Math.min(
+          //     a.ticker.indexOf(value.toUpperCase()),
+          //     a.companyName.toUpperCase().indexOf(value.toUpperCase())
+          //   );
+          //   const bDist = Math.min(
+          //     b.ticker.indexOf(value.toUpperCase()),
+          //     b.companyName.toUpperCase().indexOf(value.toUpperCase())
+          //   );
+          //   return aDist - bDist;
+          // });
+          const sortedFiltered = filtered.sort((a, b) => {
+            const aDist = a.ticker.indexOf(value.toUpperCase());
+            const bDist = b.ticker.indexOf(value.toUpperCase());
+            return aDist - bDist;
+          });
+          setFilteredTickers(sortedFiltered.slice(0, 10));
         }}
       />
       {isOpen && (
