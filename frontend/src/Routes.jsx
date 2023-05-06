@@ -25,6 +25,7 @@ const router = createBrowserRouter([
 
 function Routes() {
   const [isLoggedIn, setIsLoggedIn] = useState(AuthContext);
+  /*
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
@@ -45,10 +46,11 @@ function Routes() {
     };
 
     const token = localStorage.getItem('token');
-    if (token) {
-      checkLoggedIn();
-    }
-  }, []);
+    //if (token) {
+     // checkLoggedIn();
+    //}
+  }, []); */
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <RouterProvider

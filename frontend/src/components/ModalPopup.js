@@ -41,8 +41,14 @@ export const ModalPopup=(props)=>{
     if(response.ok){
       setIsLoggedIn(true);
       const responseData = await response.json();
-      console.log(responseData)
-      localStorage.setItem('token', responseData.token); // store the token in local storage
+      console.log(responseData);
+      await setCookie("UserCookie", "True", 30).then((res) => {
+        console.log("Got in setCookie");
+      })
+      //console.log(responseData);
+      setTimeout(() => {
+        navigate("/about");
+      }, 1000);
       //navigate("/about");
       setError("");
       handleClose();
@@ -63,6 +69,31 @@ export const ModalPopup=(props)=>{
             setIsLoggedIn(false);
             localStorage.removeItem("token");
           }
+  }
+
+  async function setCookie(cname, cvalue, exdays) {
+    console.log("Got in set cookie");
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  console.log(getCookie(cname));
+  }
+  
+  async function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
    
   };

@@ -16,7 +16,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("Plain text er ", plainTextPassword);
         const user = yield matchingPasswords(email, plainTextPassword);
         if (user) {
-            req.session.user = user; // store user object in session. A cookie is set on the client side containing the session ID The client-side then sends this cookie back to the server with each subsequent request, allowing the server to identify the session and retrieve the corresponding session data.
+            //req.session.user = user; store user object in session. A cookie is set on the client side containing the session ID The client-side then sends this cookie back to the server with each subsequent request, allowing the server to identify the session and retrieve the corresponding session data.
             res.status(200).json("Succesfull");
         }
         else {
@@ -60,15 +60,17 @@ function matchingPasswords(email, plainTextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Nu går det galt!");
         let hashedPassword = "";
+        let found = false;
         try {
             hashedPassword = (yield getUserByEmail(email)).password;
             console.log("Der eksisterede faktisk en bruger med mail", email);
+            found = true;
         }
         catch (error) {
             console.log("User does not exists", error);
         }
         console.log("Vi nåede herned!");
-        return false;
+        return found;
     });
 }
 export const loginController = {

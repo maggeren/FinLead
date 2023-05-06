@@ -37,4 +37,4 @@ app.all("/api/comment", routes.authenticateRouter);
 app.all("/api/searchbar", routes.searchBarRouter);
 //________________________
 const server = app.listen(PORT, () => console.log(`💻 Server  started on http://localhost:${PORT} 💻`));
-export default redisClient;
+//export default redisClient;
