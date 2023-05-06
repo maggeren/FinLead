@@ -4,19 +4,20 @@ import { Header } from "../components/layout/header/Header";
 import { Footer } from "../components/layout/footer/Footer";
 import { Outlet } from "react-router-dom";
 import { CommentField } from "../components/CommentField";
+import { Fragment } from "react";
 export const Root = () => {
   return (
-    <div className="page">
+    <Fragment>
       <div className="header">
         <Header />
-      </div>      
+      </div>
       <div className="content">
-        <CommentField/>
+        <CommentField />
         <Outlet></Outlet>
       </div>
       <div className="footer">
         <Footer />
       </div>
-    </div>
+    </Fragment>
   );
 };
