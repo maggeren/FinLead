@@ -60,7 +60,7 @@ export const CommentBox =(props)=>{
            <textarea onChange={handleChange}>{content}</textarea>
            <button type="submit">Save</button>
            </form>
-        ): (<p className="">{content}</p>        
+        ): (<p style={{paddingTop: "1%"}}>{content}</p>        
         )}
         </div>
         <div className="bottom-row">
