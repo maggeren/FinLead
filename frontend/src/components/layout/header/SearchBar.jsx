@@ -64,10 +64,10 @@ export const SearchBar = () => {
             value.length > 0
               ? tickers.filter(
                   (ticker) =>
-                    ticker.ticker.includes(value.toUpperCase()) ||
+                    ticker.ticker.startsWith(value.toUpperCase()) ||
                     ticker.companyName
                       .toLowerCase()
-                      .includes(value.toLowerCase())
+                      .startsWith(value.toLowerCase())
                 )
               : [];
 
@@ -85,7 +85,7 @@ export const SearchBar = () => {
           const sortedFiltered = filtered.sort((a, b) => {
             const aDist = a.ticker.indexOf(value.toUpperCase());
             const bDist = b.ticker.indexOf(value.toUpperCase());
-            return aDist - bDist;
+            return Math.max(aDist, bDist);
           });
           setFilteredTickers(sortedFiltered.slice(0, 10));
         }}
