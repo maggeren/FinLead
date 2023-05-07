@@ -85,6 +85,7 @@ function Stock() {
       {comments.reverse().map((comment, index) => (
     <div key={index}>
       <CommentBox userName={comment.userReference} 
+      id={comment._id}
       date={comment.createdAt} 
       content={comment.content} 
       likes={comment.likes}/>

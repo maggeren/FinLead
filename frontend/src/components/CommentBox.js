@@ -9,6 +9,8 @@ export const CommentBox =(props)=>{
 
   const [content, setContent] = useState(props.content);
   
+  const id = props.id;
+  console.log(id);
   const [isEditField, setEditField] = useState(false);
 
   const[likes, setLikes] = useState(props.likes);
@@ -18,12 +20,13 @@ export const CommentBox =(props)=>{
     console.log(content);
     setEditField(false);
     let response = null;
-    response = await fetch(`http://localhost:4000/api/updateComment/`, {
-        method: "PATCH",
+    let objectToPass ={id: id, content: content}
+    response = await fetch(`http://localhost:4000/api/updateComment/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(content),
+        body: JSON.stringify(objectToPass),
        })
        if(response.ok){
         console.log("Det gik godt!");
@@ -31,6 +34,28 @@ export const CommentBox =(props)=>{
        else{
         console.log("Response kom galt af sted!");
        }
+  }
+
+  const handleDelete = async(event)=>{
+    event.preventDefault();
+    let response = null;
+    console.log("For denne her er id " + id);
+    let objectToPass ={id: id}
+    response = await fetch(`http://localhost:4000/api/deleteComment/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(objectToPass),
+    })
+    console.log(response);
+    if(response.ok){
+      console.log("Det lykkedes");
+    }
+    else{
+      console.log("Nej det gjorde ej!");
+    }
+
   }
 
   const incrementLike= (event)=>{
@@ -54,6 +79,7 @@ export const CommentBox =(props)=>{
             
         </div>
         <div className="post-content">
+        <p hidden name="id">{props.id}</p>
         <a href="#">{props.userName}</a> 
         {isEditField ? (
           <form onSubmit={handleUpdate}>
@@ -71,8 +97,10 @@ export const CommentBox =(props)=>{
         </div>
         <hr></hr>
         <div className="comment-options">        
-        <button onClick={()=>setEditField(true)}>Edit</button>  
-        <button style={{marginLeft:"2%"}}>Delete</button>
+        <button onClick={()=>setEditField(true)}>Edit</button> 
+        <form onSubmit={handleDelete}>
+        <button type="submit"style={{marginLeft:"2%"}}>Delete</button>
+        </form>
         </div>
     </div>
   )

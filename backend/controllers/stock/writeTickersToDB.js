@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Ticker from "/Users/magnusgeertjensen/Desktop/FinLead/backend/models/Ticker.js";
+import Ticker from "../../models/Ticker";
 import fs from "fs";
 // Read the CSV file
 const readFromJson = () => __awaiter(void 0, void 0, void 0, function* () {

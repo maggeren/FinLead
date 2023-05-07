@@ -1,4 +1,4 @@
-import Ticker from "/Users/magnusgeertjensen/Desktop/FinLead/backend/models/Ticker.js";
+import Ticker from "../../models/Ticker";
 import fs from "fs";
 
 // Read the CSV file

@@ -44,7 +44,8 @@ app.all("/api/searchbar", routes.searchBarRouter);
 //For comments
 app.all("/api/postComment/:ticker", routes.commentRouter);
 app.all("/api/comments/:ticker", routes.commentRouter);
-app.all("/api/updateComment", routes.commentRouter);
+app.all("/api/updateComment/:id", routes.commentRouter);
+app.all("/api/deleteComment/:id", routes.commentRouter);
 
 //________________________
 const server = app.listen(PORT, () =>

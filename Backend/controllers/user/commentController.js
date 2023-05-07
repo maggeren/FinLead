@@ -40,9 +40,33 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.status(200).json(comments);
 });
 const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { content } = req.body;
+    console.log("Så kører vi!");
+    const { id, content } = req.body;
+    console.log(id, "will be passed");
     console.log(content);
-    Comment.updateOne({ content: content }, { $set: { content: content } });
-    res.status(200).json("Comment updated with new content!");
+    try {
+        const comment = yield Comment.findById(id);
+        if (!comment) {
+            return res.status(404).json({ message: "Comment not found" });
+        }
+        comment.content = content;
+        yield comment.save();
+        res.status(200).json("Comment updated with new content!");
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error updating comment" });
+    }
 });
-export const commentController = { saveComment, getComments, updateComment };
+const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Nu kører vi ");
+    const comment = req.body.id;
+    console.log(comment);
+    Comment.findByIdAndDelete(comment, (err, document) => {
+        if (!err) {
+            console.log("Comment just got deleted!");
+        }
+    });
+    res.status(200).json("Her er din kommentar");
+});
+export const commentController = { saveComment, getComments, updateComment, deleteComment };
