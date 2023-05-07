@@ -63,19 +63,18 @@ function Stock() {
       });
       const responseData = await response.json();
       console.log(responseData);
-      setComments(responseData);
+      setComments(responseData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
     } catch (error) {
       console.log(error);
     }
   };
 
-  //const sortedComments = comments.sort((a, b) => a.userName - b.);
+  //const sortedComments = comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handleNewComment = async(newComment) =>{
-    console.log("Så kører vi! Som Italiensk Peter altid sagde.. ")
 
     setComments([...comments, newComment])
-    window.location.reload();
+   // window.location.reload();
  
   }
   

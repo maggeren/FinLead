@@ -14,9 +14,10 @@ export const ModalPopup=(props)=>{
   const { userState, setUserState } = useContext(AuthContext);
   console.log(userState);
   const navigate = useNavigate();
-
+   
   const [inputs, setInputs] = useState({});
   const [error, setError] = useState("");
+   
 
   useEffect(() => {
     console.log(userState);
@@ -55,9 +56,9 @@ export const ModalPopup=(props)=>{
         console.log("Got in setCookie");
       })
       //console.log(responseData);
-      setTimeout(() => {
-        navigate("/about");
-      }, 1000);
+      // setTimeout(() => {
+      //   navigate("/about");
+      // }, 1000);
       //navigate("/about");
       setError("");
       handleClose();

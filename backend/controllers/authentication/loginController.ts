@@ -10,8 +10,8 @@ const loginUser = async (req: any, res: any) => {
     console.log("Plain text er ", plainTextPassword);
     const user = await matchingPasswords(email, plainTextPassword);
     if (user) {
-      //req.session.user = user; store user object in session. A cookie is set on the client side containing the session ID The client-side then sends this cookie back to the server with each subsequent request, allowing the server to identify the session and retrieve the corresponding session data.
-      res.status(200).json("Succesfull");
+      let userReference = await getUserByEmail(email);
+      res.status(200).json(userReference);
     } else {
       res.status(400).json("Access denied!");
     }
@@ -43,11 +43,7 @@ async function getUserByEmail(email: string): Promise<any> {
 // };
 
 const logoutUser = (req: any, res: any) => {
-  req.session.destroy(() => {
-    //sessions gets destroyed and the user's session cookie is cleared as well.
-    res.clearCookie("connect.sid", { path: "/" });
-    res.status(200).json("Logged out!");
-  });
+  res.status(200).json("Logged out!");
 };
 
 async function matchingPasswords(

@@ -110,7 +110,7 @@ ul.dropdown-menu {
 
 form.form-search {
   position: relative;
-  width: 30vh;
+  /* width: 30vh; */
 }
 
 .form-container:before {

@@ -9,8 +9,9 @@ const TickerList = ({ filteredTickers, setIsOpen }) => {
           <Link
             to={"stock/" + ticker.ticker}
             className="ticker-link"
-            onClick={() => {
+            onClick={(event) => {
               setIsOpen(false);
+              event.preventDefault();
             }}
           >
             <div className="ticker-wrapper">

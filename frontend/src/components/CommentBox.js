@@ -10,7 +10,6 @@ export const CommentBox =(props)=>{
   const [content, setContent] = useState(props.content);
   
   const id = props.id;
-  console.log(id);
   const [isEditField, setEditField] = useState(false);
 
   const[likes, setLikes] = useState(props.likes);

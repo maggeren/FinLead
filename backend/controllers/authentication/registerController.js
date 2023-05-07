@@ -11,10 +11,7 @@ import User from "../../models/User.js";
 import { hashPassword } from "../../utils/bcrypt.js";
 import { loginController } from "./loginController.js";
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(" KIG HER");
-    console.log(req.params);
     const { email, password, userName } = req.body;
-    console.log({ email, password });
     const exists = yield getUserByEmail(email);
     const userNameExists = yield getUserByUserName(userName);
     if (exists) {

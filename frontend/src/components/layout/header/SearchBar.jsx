@@ -53,11 +53,15 @@ export const SearchBar = () => {
         className="search-bar"
         aria-label="Search"
         onKeyDown={(e) => {
-          if (e.key === "Enter" && filteredTickers.length > 0) {
+          if (e.key === "Enter" && filteredTickers.length > 0) {           
             navigate(`stock/${filteredTickers[0].ticker}`);
+
           }
         }}
-        onClick={() => setIsOpen(true)}
+        onClick={(event) => {
+
+          setIsOpen(true)}
+        }
         onChange={(e) => {
           const value = e.target.value;
           const filtered =
