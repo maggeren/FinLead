@@ -106,8 +106,9 @@ ul.dropdown-menu {
   border: none;
 }
 
-/* parent search bar*/
-.form-container {
+
+
+form.form-search {
   position: relative;
   width: 30vh;
 }

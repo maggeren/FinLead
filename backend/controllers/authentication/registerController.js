@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import User from "../../models/User.js";
 import { hashPassword } from "../../utils/bcrypt.js";
+import { loginController } from "./loginController.js";
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(" KIG HER");
     console.log(req.params);
@@ -32,6 +33,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         createdAt: new Date().toLocaleDateString("en-GB"),
     });
     newUser.save();
+    yield loginController.loginUser(email, password);
     res.status(200).json("New User Added!");
 });
 function getUserByEmail(email) {

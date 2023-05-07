@@ -1,11 +1,9 @@
 import User from "../../models/User.js";
 import { hashPassword } from "../../utils/bcrypt.js";
+import { loginController } from "./loginController.js";
 
 const registerUser = async (req: any, res: any) => {
-  console.log(" KIG HER");
-  console.log(req.params)
   const { email, password, userName } = req.body;
-  console.log({ email, password });
   const exists = await getUserByEmail(email);
   const userNameExists = await getUserByUserName(userName);
   if(exists) {console.log("Email allerede i brug"); return res.status(409).json("Email allready exist");} 
@@ -18,6 +16,7 @@ const registerUser = async (req: any, res: any) => {
     createdAt: new Date().toLocaleDateString("en-GB"),
   });
   newUser.save();
+  await loginController.loginUser(email, password);
   res.status(200).json("New User Added!");
 };
 

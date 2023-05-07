@@ -8,11 +8,10 @@ const loginUser = async (req: any, res: any) => {
   try {
     const { email, password: plainTextPassword } = req.body;
     console.log("Plain text er ", plainTextPassword);
-    const userExists = await matchingPasswords(email, plainTextPassword);
-    if (userExists) {
-      const user = await getUserByEmail(email);
-      console.log(user);
-      res.status(200).json(user);
+    const user = await matchingPasswords(email, plainTextPassword);
+    if (user) {
+      //req.session.user = user; store user object in session. A cookie is set on the client side containing the session ID The client-side then sends this cookie back to the server with each subsequent request, allowing the server to identify the session and retrieve the corresponding session data.
+      res.status(200).json("Succesfull");
     } else {
       res.status(400).json("Access denied!");
     }
@@ -57,16 +56,18 @@ async function matchingPasswords(
 ): Promise<boolean> {
   console.log("Nu går det galt!");
   let hashedPassword = "";
+  let found = false;
   try {
     let user = await getUserByEmail(email);
     console.log(user);
     hashedPassword = (await getUserByEmail(email)).password;
-    return true;
+    console.log("Der eksisterede faktisk en bruger med mail", email);
+    found = true;
   } catch (error) {
     console.log("User does not exists", error);
   }
   console.log("Vi nåede herned!");
-  return false;
+  return found;
 }
 export const loginController = {
   loginUser,

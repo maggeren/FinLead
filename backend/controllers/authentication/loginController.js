@@ -61,17 +61,19 @@ function matchingPasswords(email, plainTextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Nu går det galt!");
         let hashedPassword = "";
+        let found = false;
         try {
             let user = yield getUserByEmail(email);
             console.log(user);
             hashedPassword = (yield getUserByEmail(email)).password;
-            return true;
+            console.log("Der eksisterede faktisk en bruger med mail", email);
+            found = true;
         }
         catch (error) {
             console.log("User does not exists", error);
         }
         console.log("Vi nåede herned!");
-        return false;
+        return found;
     });
 }
 export const loginController = {
