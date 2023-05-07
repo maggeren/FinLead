@@ -33,6 +33,7 @@ const StockData = [
 ];
 function Stock() {
   const { ticker } = useParams();
+  const [comments, setComments] = useState([]);
   const [chartData, setChartData] = useState({
     labels: StockData.map((data) => data.year),
     datasets: [
@@ -43,7 +44,7 @@ function Stock() {
       },
     ],
   });
-  const [comments, setComments] = useState([]);
+
 
 
   useEffect(() => {
@@ -68,12 +69,14 @@ function Stock() {
     }
   };
 
-  const sortedComments = comments.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
+  //const sortedComments = comments.sort((a, b) => a.userName - b.);
 
-  const handleNewComment = async(commentData) =>{
+  const handleNewComment = async(newComment) =>{
     console.log("Så kører vi! Som Italiensk Peter altid sagde.. ")
-    setComments([...comments, commentData])
-    await fetchComments();
+
+    setComments([...comments, newComment])
+    window.location.reload();
+ 
   }
   
   return (
@@ -82,7 +85,7 @@ function Stock() {
       <CommentField ticker ={ticker} setComments={handleNewComment} />
       <br></br>
       <div className="comment-section">
-      {comments.reverse().map((comment, index) => (
+      {comments.map((comment, index) => (
     <div key={index}>
       <CommentBox userName={comment.userReference} 
       id={comment._id}

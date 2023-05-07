@@ -11,7 +11,9 @@ import Comment from "../../models/Comment.js";
 const saveComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Going to save comment");
     const content = req.body.content;
+    const user = req.body.user;
     console.log(content);
+    console.log("Userreference is " + user);
     console.log("parametre er" + req.params);
     const tickerRef = req.params.ticker;
     console.log("tickerRef er " + tickerRef);
@@ -27,7 +29,7 @@ const saveComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         content: content,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
-        userReference: "Test Kaj",
+        userReference: user,
         likes: 0
     });
     comment.save();

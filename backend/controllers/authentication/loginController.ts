@@ -12,8 +12,7 @@ const loginUser = async (req: any, res: any) => {
     if (userExists) {
       const user = await getUserByEmail(email);
       console.log(user);
-      const token = jwt.sign({userName: user.userName}, "secretKey") 
-      res.json({token: token});
+      res.status(200).json(user);
     } else {
       res.status(400).json("Access denied!");
     }

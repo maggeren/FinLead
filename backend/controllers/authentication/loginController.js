@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import User from "../../models/User.js";
-import jwt from "jsonwebtoken";
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Nu er vi startet! fra localhost 4000.");
     console.log(req.body);
@@ -19,8 +18,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (userExists) {
             const user = yield getUserByEmail(email);
             console.log(user);
-            const token = jwt.sign({ userName: user.userName }, "secretKey");
-            res.json({ token: token });
+            res.status(200).json(user);
         }
         else {
             res.status(400).json("Access denied!");

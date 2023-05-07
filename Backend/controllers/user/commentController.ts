@@ -4,7 +4,9 @@ import jwt from "jsonwebtoken";
 const saveComment = async(req: any, res:any) => {
     console.log("Going to save comment");
     const content = req.body.content
+    const user = req.body.user;
     console.log(content);
+    console.log("Userreference is " + user);
     console.log("parametre er" + req.params);
     const tickerRef = req.params.ticker;
     console.log("tickerRef er " + tickerRef)
@@ -20,7 +22,7 @@ const saveComment = async(req: any, res:any) => {
         content:content,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
-        userReference: "Test Kaj",
+        userReference: user,
         likes: 0
     });
     comment.save();

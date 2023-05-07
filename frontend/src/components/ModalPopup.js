@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import InputField from "./InputField";
 import Modal from 'react-bootstrap/Modal';
@@ -12,10 +12,15 @@ export const ModalPopup=(props)=>{
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { userState, setUserState } = useContext(AuthContext);
+  console.log(userState);
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    console.log(userState);
+  }, [userState]);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -28,7 +33,7 @@ export const ModalPopup=(props)=>{
     event.preventDefault();
     console.log(inputs);
     let response = null;
-    if(!isLoggedIn){   
+    if(!userState.isLoggedIn){   
     response = await fetch(`http://localhost:4000/api/login`, {
       method: "POST",
       headers: {
@@ -38,9 +43,13 @@ export const ModalPopup=(props)=>{
       credentials: 'include', // Add this line
     });
     if(response.ok){
-      setIsLoggedIn(true);
       const responseData = await response.json();
       console.log(responseData)
+      setUserState({
+        userReference:responseData.userName,
+        isLoggedIn: true
+      })
+      console.log(userState.userReference);
       //navigate("/about");
       setError("");
       handleClose();
@@ -58,8 +67,11 @@ export const ModalPopup=(props)=>{
             credentials: 'include', // Add this line
           });
           if(response.ok){
-            setIsLoggedIn(false);
-            localStorage.removeItem("token");
+            setUserState({
+              userReference:"",
+              isLoggedIn:false
+            });
+            console.log(userState);
           }
   }
    
@@ -67,10 +79,10 @@ export const ModalPopup=(props)=>{
 
   return (
     <>
-      {!isLoggedIn ? (
+      {!userState.isLoggedIn ? (
         <div>
         <Button variant="primary" onClick={handleShow}>
-             {isLoggedIn ? "Logout" : "Login"}
+             {userState.isLoggedIn ? "Logout" : "Login"}
         </Button>
         <Modal
         show={show}
@@ -130,7 +142,7 @@ export const ModalPopup=(props)=>{
       ) : (
         <div>
           <form onSubmit={handleSubmit}>
-            <Button type="submit" variant="primary">{isLoggedIn ? "Logout" : "Login"}</Button>
+            <Button type="submit" variant="primary">{userState.isLoggedIn ? "Logout" : "Login"}</Button>
           </form>
         </div>
       )}
