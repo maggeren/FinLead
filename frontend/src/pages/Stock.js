@@ -3,7 +3,7 @@ import LineChart from "../components/charts/LineChart";
 import { CommentField } from "../components/CommentField";
 import { CommentBox } from "../components/CommentBox";
 import { useParams } from "react-router-dom";
-import { Scrollbars } from 'react-custom-scrollbars';
+
 const StockData = [
   {
     id: 1,
@@ -45,21 +45,22 @@ function Stock() {
   });
   const [comments, setComments] = useState([]);
 
-
   useEffect(() => {
     fetchComments();
-
   }, []);
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://localhost:${4000}/api/comments/${ticker}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        cache: "default",
-      });
+      const response = await fetch(
+        `http://localhost:${4000}/api/comments/${ticker}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          cache: "default",
+        }
+      );
       const responseData = await response.json();
       console.log(responseData);
       setComments(responseData);
@@ -68,30 +69,34 @@ function Stock() {
     }
   };
 
-  const sortedComments = comments.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
+  const sortedComments = comments.sort(
+    (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)
+  );
 
-  const handleNewComment = async(commentData) =>{
-    console.log("Så kører vi! Som Italiensk Peter altid sagde.. ")
-    setComments([...comments, commentData])
+  const handleNewComment = async (commentData) => {
+    console.log("Så kører vi! Som Italiensk Peter altid sagde.. ");
+    setComments([...comments, commentData]);
     await fetchComments();
-  }
-  
+  };
+
   return (
     <div style={{ width: 700 }}>
       <LineChart chartData={chartData} ticker={ticker} />
-      <CommentField ticker ={ticker} setComments={handleNewComment} />
+      <CommentField ticker={ticker} setComments={handleNewComment} />
       <br></br>
       <div className="comment-section">
-      {comments.reverse().map((comment, index) => (
-    <div key={index}>
-      <CommentBox userName={comment.userReference} 
-      date={comment.createdAt} 
-      content={comment.content} 
-      likes={comment.likes}/>
-      <br></br>
-    </div>
-  ))}
-      </div>     
+        {comments.reverse().map((comment, index) => (
+          <div key={index}>
+            <CommentBox
+              userName={comment.userReference}
+              date={comment.createdAt}
+              content={comment.content}
+              likes={comment.likes}
+            />
+            <br></br>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

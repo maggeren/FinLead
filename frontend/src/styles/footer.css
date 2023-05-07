@@ -1,27 +1,21 @@
 footer {
-  background-color: rgb(23, 22, 22);
+  background-color: #242526;
   display: flex;
   justify-content: space-around;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
 }
 
-.title {
-  margin-top: 1rem;
-  color: white;
-  display: inline-block;
-  width: 100%;
-  font-weight: 500;
-  text-align: left;
-}
 .social-icon {
-  color: white;
+  color: #b0b3b8;
   font-size: 1.7rem;
+  padding-right: 1vh;
 }
 
 .social-icons {
   display: flex;
   align-items: center;
-  margin-top: 1rem;
-  justify-content: space-between;
 }
 .facebook :hover {
   color: rgb(59, 89, 152);
@@ -35,18 +29,10 @@ footer {
 
 .link {
   text-decoration: none;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 150;
+  color: #b0b3b8;
 }
 
 .link:hover {
   text-decoration: underline;
   color: white;
-}
-
-.footer-ul {
-  list-style-type: none;
-  text-indent: -1.9rem;
-  text-align: left;
 }

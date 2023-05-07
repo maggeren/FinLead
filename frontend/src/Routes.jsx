@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import AuthContext from "./components/AuthContext";
 import { Spinner } from "./components/shared/Spinner";
 import { Register } from "./pages/Register";
-
+import { ProfilePage } from "./pages/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +18,8 @@ const router = createBrowserRouter([
       { path: "stock/:ticker", element: <Stock></Stock> },
       { path: "about", element: <h1>About</h1> },
       { path: "spinner", element: <Spinner /> },
-      { path: "register", element: <Register/>},
+      { path: "register", element: <Register /> },
+      { path: "profile/:name", element: <ProfilePage /> },
     ],
   },
 ]);
@@ -28,23 +29,23 @@ function Routes() {
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/checkLogin', {
-          method: 'GET',
-          credentials: 'include',
+        const response = await fetch("http://localhost:4000/api/checkLogin", {
+          method: "GET",
+          credentials: "include",
         });
 
         if (response.ok) {
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
-          localStorage.removeItem('token');
+          localStorage.removeItem("token");
         }
       } catch (error) {
         console.error(error);
       }
     };
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       checkLoggedIn();
     }
