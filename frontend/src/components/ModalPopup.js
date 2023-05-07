@@ -11,8 +11,7 @@ export const ModalPopup=(props)=>{
   // const year = new Date().getFullYear()
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
+  const { userState, setUserState } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
@@ -42,7 +41,6 @@ export const ModalPopup=(props)=>{
       setIsLoggedIn(true);
       const responseData = await response.json();
       console.log(responseData)
-      localStorage.setItem('token', responseData.token); // store the token in local storage
       //navigate("/about");
       setError("");
       handleClose();
