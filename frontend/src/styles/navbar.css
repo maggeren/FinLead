@@ -132,6 +132,7 @@ form.form-search {
 .ticker-link {
   text-decoration: none;
   color: black;
+  cursor:pointer;
 }
 
 /* The search field when it gets focus/clicked on */
