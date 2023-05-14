@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Comment from "../../models/Comment.js";
 const saveComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     console.log("Going to save comment");
     const content = req.body.content;
     const user = req.body.user;
@@ -17,6 +18,8 @@ const saveComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     console.log("parametre er" + req.params);
     const tickerRef = req.params.ticker;
     console.log("tickerRef er " + tickerRef);
+    const parent = (_a = req.body.parent) !== null && _a !== void 0 ? _a : null;
+    console.log(parent);
     // if (!req.headers.authorization) {
     //     return res.status(401).json({ message: "Missing Authorization header" });
     //   }
@@ -30,7 +33,8 @@ const saveComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
         userReference: user,
-        likes: 0
+        likes: 0,
+        parent: parent
     });
     comment.save();
     res.status(200).json("New user added");
@@ -40,6 +44,19 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const comments = yield Comment.find({ tickerReference: ticker });
     console.log(comments);
     res.status(200).json(comments);
+});
+const getCommentById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.body.id;
+    const comment = yield Comment.findById({ _id: id });
+    res.status(200).json(comment);
+});
+const getReplies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Så henter vi svar!");
+    const parent = yield Comment.findById({ _id: req.params.parent });
+    console.log(parent);
+    const replies = yield Comment.find({ parent: parent });
+    console.log(replies);
+    res.status(200).json(replies);
 });
 const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Så kører vi!");
@@ -71,4 +88,4 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     });
     res.status(200).json("Her er din kommentar");
 });
-export const commentController = { saveComment, getComments, updateComment, deleteComment };
+export const commentController = { saveComment, getComments, updateComment, deleteComment, getReplies };

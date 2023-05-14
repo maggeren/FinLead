@@ -1,5 +1,6 @@
 import Comment from "../../models/Comment.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const saveComment = async(req: any, res:any) => {
     console.log("Going to save comment");
@@ -10,6 +11,8 @@ const saveComment = async(req: any, res:any) => {
     console.log("parametre er" + req.params);
     const tickerRef = req.params.ticker;
     console.log("tickerRef er " + tickerRef)
+    const parent = req.body.parent ?? null;
+    console.log(parent);
     // if (!req.headers.authorization) {
     //     return res.status(401).json({ message: "Missing Authorization header" });
     //   }
@@ -23,7 +26,8 @@ const saveComment = async(req: any, res:any) => {
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: tickerRef,
         userReference: user,
-        likes: 0
+        likes: 0,
+        parent: parent
     });
     comment.save();
     res.status(200).json("New user added")
@@ -34,6 +38,15 @@ const getComments = async(req:any, res:any) =>{
     const comments = await Comment.find({tickerReference: ticker});
     console.log(comments);
     res.status(200).json(comments);
+}
+
+const getReplies = async(req: any, res:any)=>{
+    console.log("Så henter vi svar!");
+    const parent = await Comment.findById({_id:req.params.parent});
+    console.log(parent);
+    const replies = await Comment.find({parent: parent});
+    console.log(replies);
+    res.status(200).json(replies);
 }
 
 const updateComment = async(req:any,res:any) =>{
@@ -68,4 +81,4 @@ const deleteComment = async(req:any, res:any) =>{
     res.status(200).json("Her er din kommentar");
 }
 
-export const commentController = {saveComment, getComments, updateComment, deleteComment}
+export const commentController = {saveComment, getComments, updateComment, deleteComment, getReplies}
