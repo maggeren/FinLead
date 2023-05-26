@@ -1,7 +1,5 @@
 # FinLead
 
-Welcome to the FinLead repository! This repository contains the source code for the FinLead project, a financial lead management system. The system is designed to help financial institutions manage and track leads effectively, streamlining the lead conversion process.
-
 FinLead aims to be a unique social media platform that revolutionizes the way you follow and engage with leaders in the financial world. Unlike traditional social media platforms that focus on social status, FinLead allows you to connect with leaders based on their track records of stock predictions made through the app.
 
 With FinLead, you can easily discover and follow financial leaders who have consistently demonstrated their expertise in making accurate stock predictions. Through their profiles, you can access their past predictions and performance records, gaining valuable insights into their investment strategies and success rates.
