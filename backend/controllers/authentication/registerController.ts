@@ -1,15 +1,19 @@
 import User from "../../models/User.js";
 import { hashPassword } from "../../utils/bcrypt.js";
-
+import mongoose from "mongoose";
 const registerUser = async (req: any, res: any) => {
-  console.log(" KIG HER");
-  console.log(req.params)
+  console.log(req.params);
   const { email, password, userName } = req.body;
   console.log({ email, password });
   const exists = await getUserByEmail(email);
   const userNameExists = await getUserByUserName(userName);
-  if(exists) {console.log("Email allerede i brug"); return res.status(409).json("Email allready exist");} 
-  else if(userNameExists) {console.log("Bruger allerede i brug"); return res.status(409).json("Username allready exist");}
+  if (exists) {
+    console.log("Email allerede i brug");
+    return res.status(409).json("Email allready exist");
+  } else if (userNameExists) {
+    console.log("Bruger allerede i brug");
+    return res.status(409).json("Username allready exist");
+  }
   const hashedPassword = await hashPassword(password);
   const newUser = new User({
     userName: userName,
@@ -21,6 +25,25 @@ const registerUser = async (req: any, res: any) => {
   res.status(200).json("New User Added!");
 };
 
+const updateUser = async (req: any, res: any) => {
+  console.log("ID: " + req.params);
+  const id = req.params;
+  const updateFields = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, error: "Invalid user ID" });
+  }
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({ success: true, data: updatedUser });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ success: false, error: err });
+  }
+};
 
 async function getUserByEmail(email: string): Promise<any> {
   return await User.findOne({ email: email });
@@ -30,8 +53,4 @@ async function getUserByUserName(userName: string): Promise<any> {
   return await User.findOne({ userName: userName });
 }
 
-
-
-
-
-export const registerController = { registerUser };
+export const registerController = { registerUser, updateUser };
