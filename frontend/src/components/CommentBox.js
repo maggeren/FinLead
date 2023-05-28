@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useState, useEffect} from "react";
 import { CommentField } from "./CommentField";
 import "../styles/user.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,8 +14,15 @@ export const CommentBox =(props)=>{
   const [isEditField, setEditField] = useState(false);
 
   const[likes, setLikes] = useState(props.likes);
+  const[replies, setReplies] = useState([])
 
   const[replyActive, setReply] = useState(false); 
+
+
+  useEffect(() => {
+    getReplies();
+
+  }, []);
 
   const handleUpdate = async(event)=>{
     event.preventDefault();
@@ -36,6 +43,23 @@ export const CommentBox =(props)=>{
        else{
         console.log("Response kom galt af sted!");
        }
+  }
+
+  const getReplies = async()=>{
+    try{
+      const response = await fetch(`http://localhost:${4000}/api/replies/${id}`, {
+        method:"GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "default",
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      setReplies(responseData);
+    } catch(error){
+      console.log(error);
+    }
   }
 
   const handleDelete = async(event)=>{
@@ -59,6 +83,7 @@ export const CommentBox =(props)=>{
     }
 
   }
+
 
   const incrementLike= (event)=>{
      setLikes(likes +1);
@@ -134,7 +159,9 @@ export const CommentBox =(props)=>{
         <form onSubmit={handleDelete}>
         <button type="submit"style={{marginLeft:"2%"}}>Delete</button>
         </form>
+       
         </div>
+       
     </div>
     {replyActive && (
       <div className="reply-field">
@@ -146,6 +173,16 @@ export const CommentBox =(props)=>{
         </form>
     </div>
     )}
+    {replies.length > 0 && (
+          <div>
+          {replies.map((reply, index) => (
+            <div style={{backgroundColor: "lightblue", borderColor:"black", border:"solid"}} key={index}>
+            <span>User: {reply.userReference}</span>
+            <p>{reply.content}</p>
+            </div>
+          ))}
+          </div>
+        )}
     
     </Fragment>
   )

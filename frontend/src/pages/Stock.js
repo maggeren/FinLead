@@ -4,6 +4,11 @@ import { CommentField } from "../components/CommentField";
 import { CommentBox } from "../components/CommentBox";
 import { useParams } from "react-router-dom";
 import { Scrollbars } from 'react-custom-scrollbars';
+import { io } from "socket.io-client";
+
+
+
+
 const StockData = [
   {
     id: 1,
@@ -49,6 +54,16 @@ function Stock() {
 
   useEffect(() => {
     fetchComments();
+
+    // Subscribe to the stock updates using the socket
+    socket.emit("subscribe", ticker);
+
+    // Listen for new comments from the socket
+    socket.on("newComment", handleNewComment);
+    return () => {
+      // Unsubscribe from the stock updates when the component unmounts
+      socket.emit("unsubscribe", ticker);
+    };
 
   }, []);
 

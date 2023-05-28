@@ -45,11 +45,6 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     console.log(comments);
     res.status(200).json(comments);
 });
-const getCommentById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.body.id;
-    const comment = yield Comment.findById({ _id: id });
-    res.status(200).json(comment);
-});
 const getReplies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Så henter vi svar!");
     const parent = yield Comment.findById({ _id: req.params.parent });

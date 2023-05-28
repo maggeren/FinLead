@@ -1,6 +1,9 @@
 import React, {useContext, useState} from "react";
 import AuthContext from "./AuthContext";
 import { ModalPopup } from "./ModalPopup";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4000")
 
 export const CommentField=(props) =>{
   const { userState, setUserState } = useContext(AuthContext);
@@ -24,6 +27,7 @@ export const CommentField=(props) =>{
         setComment(value);
         console.log(comment);
       };
+
 
     const handleSubmit = async(event) =>{
        event.preventDefault();
