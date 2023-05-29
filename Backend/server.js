@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import express from "express";
 import session from "express-session";
 import cors from "cors";
@@ -7,8 +16,7 @@ import { routes } from "./routes/exports.js";
 import connectDB from "./config/db.js";
 import http from "http";
 import { Server } from "socket.io";
-//const redisClient = redis.createClient();
-//redisClient.connect();
+import { commentController } from "./controllers/user/commentController.js";
 const PORT = process.env.PORT;
 connectDB();
 const app = express();
@@ -52,21 +60,37 @@ app.all("/api/replies/:parent", routes.commentRouter);
 app.all("/api/updateComment/:id", routes.commentRouter);
 app.all("/api/deleteComment/:id", routes.commentRouter);
 // Handle WebSocket connections
-// Handle WebSocket connections
+//-----------------------------------------
 io.on("connection", (socket) => {
     console.log("WebSocket connection established");
     // Handle incoming messages
-    socket.on("message", (message) => {
-        console.log(`Received message: ${message}`);
-        // Send a response back to the client
-        socket.send("This is a response from the server!");
-    });
+    socket.on("comment", (data) => __awaiter(void 0, void 0, void 0, function* () {
+        //Save comment to database
+        try {
+            yield commentController.saveComment(data); //saving the new comment
+            const updatedComments = yield commentController.getCommentsByTicker(data.tickerRef);
+            console.log(updatedComments);
+            io.emit("serverResponse", updatedComments);
+        }
+        catch (error) {
+            console.log(error);
+            //socket.emit("serverResponse", "Could not save it bitch!");
+        }
+        // Send a response back to the client  
+    }));
+    socket.on("newCommentAdded", (data) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(data.tickerRef);
+        const updatedComments = yield commentController.getCommentsByTicker(data.tickerRef);
+        console.log(updatedComments);
+        socket.emit("serverResponse", updatedComments);
+    }));
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
     // Send a message to the client on connection
     socket.send("Welcome to the WebSocket server!");
 });
+//---------------------------------------------
 // Start the server
 server.listen(PORT, () => console.log(`💻 Server started on http://localhost:${PORT} 💻`));
 //________________________

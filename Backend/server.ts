@@ -7,8 +7,8 @@ import { routes } from "./routes/exports.js";
 import connectDB from "./config/db.js";
 import http from "http";
 import { Server} from "socket.io";
-//const redisClient = redis.createClient();
-//redisClient.connect();
+import { commentController } from "./controllers/user/commentController.js";
+
 const PORT = process.env.PORT;
 
 connectDB();
@@ -30,6 +30,7 @@ const corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
+
 //app.use(cors(corsOptions));
 app.use(
   session({
@@ -62,22 +63,36 @@ app.all("/api/replies/:parent", routes.commentRouter);
 app.all("/api/updateComment/:id", routes.commentRouter);
 app.all("/api/deleteComment/:id", routes.commentRouter);
 
+
 // Handle WebSocket connections
-// Handle WebSocket connections
-
-
-
+//-----------------------------------------
 io.on("connection", (socket) => {
   console.log("WebSocket connection established");
 
   // Handle incoming messages
   
-  socket.on("message", (message) => {
-    console.log(`Received message: ${message}`);
+  socket.on("comment", async (data) => {
+    //Save comment to database
+    try{
+      await commentController.saveComment(data); //saving the new comment
+      const updatedComments = await commentController.getCommentsByTicker(data.tickerRef)
+      console.log(updatedComments);
+      io.emit("serverResponse", updatedComments);
+    }
+    catch(error){
+        console.log(error);
+        //socket.emit("serverResponse", "Could not save it bitch!");
+    }
 
-    // Send a response back to the client
-    socket.send("This is a response from the server!");
+    // Send a response back to the client  
   });
+
+  socket.on("newCommentAdded", async(data) =>{
+    console.log(data.tickerRef);
+    const updatedComments = await commentController.getCommentsByTicker(data.tickerRef)
+    console.log(updatedComments);
+    socket.emit("serverResponse", updatedComments);
+  })
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
@@ -86,6 +101,8 @@ io.on("connection", (socket) => {
   // Send a message to the client on connection
   socket.send("Welcome to the WebSocket server!");
 });
+
+//---------------------------------------------
 
 // Start the server
 server.listen(PORT, () =>

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { Scrollbars } from 'react-custom-scrollbars';
 import { io } from "socket.io-client";
 
-
+const socket = io("http://localhost:4000")
 
 
 const StockData = [
@@ -50,20 +50,31 @@ function Stock() {
     ],
   });
 
+  // const handleServerResponse = () => {
+  //   console.log("refetching the new comments")
+  //   fetchComments();
+  // };
 
+  socket.on("serverResponse", (updatedComments) => {
+    console.log("Det her hørte jeg godt, du har nogle nye kommentarer til mig ", updatedComments);
+    setComments(updatedComments);
+  });
 
   useEffect(() => {
     fetchComments();
 
     // Subscribe to the stock updates using the socket
-    socket.emit("subscribe", ticker);
+    //socket.emit("subscribe", ticker);
 
     // Listen for new comments from the socket
     socket.on("newComment", handleNewComment);
+    
+    
+
     return () => {
-      // Unsubscribe from the stock updates when the component unmounts
-      socket.emit("unsubscribe", ticker);
-    };
+      socket.off("newComment", handleNewComment);
+      socket.disconnect();
+    }
 
   }, []);
 
@@ -87,7 +98,6 @@ function Stock() {
   //const sortedComments = comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handleNewComment = async(newComment) =>{
-
     setComments([...comments, newComment])
    // window.location.reload();
  

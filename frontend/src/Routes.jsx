@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound> </NotFound>,
     children: [
       { path: "main", element: <h1>This is the landing page</h1> },
-      { path: "stock/:ticker", element: <Stock socket={socket}></Stock> },
+      { path: "stock/:ticker", element: <Stock></Stock> },
       { path: "about", element: <h1>About</h1> },
       { path: "spinner", element: <Spinner /> },
       { path: "register", element: <Register/>},

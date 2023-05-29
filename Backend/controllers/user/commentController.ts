@@ -2,41 +2,39 @@ import Comment from "../../models/Comment.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-const saveComment = async(req: any, res:any) => {
-    console.log("Going to save comment");
-    const content = req.body.content
-    const user = req.body.user;
-    console.log(content);
-    console.log("Userreference is " + user);
-    console.log("parametre er" + req.params);
-    const tickerRef = req.params.ticker;
-    console.log("tickerRef er " + tickerRef)
-    const parent = req.body.parent ?? null;
-    console.log(parent);
-    // if (!req.headers.authorization) {
-    //     return res.status(401).json({ message: "Missing Authorization header" });
-    //   }
-    // const token = req.headers.authorization.split(" ")[1]; // get the token from the Authorization header
-    // const decodedToken = jwt.verify(token, "secretKey"); // decode the token using the secret key
-    // console.log("afkoded token er " + decodedToken);
-   // const userName = decodedToken.userName; // extract the user id from the token
-   // console.log("Navn er " + userName);
+const saveComment = async(data:any) => {
+    // console.log("Going to save comment");
+    // const content = req.body.content
+    // const user = req.body.user;
+    // console.log(content);
+    // console.log("Userreference is " + user);
+    // console.log("parametre er" + req.params);
+    // const tickerRef = req.params.ticker;
+    // console.log("tickerRef er " + tickerRef)
+    // const parent = req.body.parent ?? null;
+    // console.log(parent);
     const comment = new Comment({
-        content:content,
+        content: data.comment,
         createdAt: new Date().toLocaleDateString("en-GB"),
-        tickerReference: tickerRef,
-        userReference: user,
+        tickerReference: data.tickerRef,
+        userReference: data.user,
         likes: 0,
-        parent: parent
+        //parent: "null"
     });
-    comment.save();
-    res.status(200).json("New user added")
+    await comment.save();
+    console.log("Saved new comment to the database")
+   // res.status(200).json("New user added")
 };
+
+const getCommentsByTicker= async(ticker: any)=>{
+      const commments = await Comment.find({tickerReference: ticker});
+      return commments;
+}
 
 const getComments = async(req:any, res:any) =>{
     const ticker = req.params.ticker;
     const comments = await Comment.find({tickerReference: ticker});
-    console.log(comments);
+   // console.log(comments);
     res.status(200).json(comments);
 }
 
@@ -45,7 +43,7 @@ const getReplies = async(req: any, res:any)=>{
     const parent = await Comment.findById({_id:req.params.parent});
     console.log(parent);
     const replies = await Comment.find({parent: parent});
-    console.log(replies);
+  //  console.log(replies);
     res.status(200).json(replies);
 }
 
@@ -81,4 +79,4 @@ const deleteComment = async(req:any, res:any) =>{
     res.status(200).json("Her er din kommentar");
 }
 
-export const commentController = {saveComment, getComments, updateComment, deleteComment, getReplies}
+export const commentController = {saveComment, getComments, getCommentsByTicker, updateComment, deleteComment, getReplies}
