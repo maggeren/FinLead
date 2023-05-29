@@ -8,12 +8,10 @@ const loginUser = async (req: any, res: any) => {
   try {
     const { email, password: plainTextPassword } = req.body;
     console.log("Plain text er ", plainTextPassword);
-    const userExists = await matchingPasswords(email, plainTextPassword);
-    if (userExists) {
-      const user = await getUserByEmail(email);
-      console.log(user);
-      const token = jwt.sign({userName: user.userName}, "secretKey") 
-      res.json({token: token});
+    const user = await matchingPasswords(email, plainTextPassword);
+    if (user) {
+      let userReference = await getUserByEmail(email);
+      res.status(200).json(userReference);
     } else {
       res.status(400).json("Access denied!");
     }
@@ -45,11 +43,7 @@ async function getUserByEmail(email: string): Promise<any> {
 // };
 
 const logoutUser = (req: any, res: any) => {
-  req.session.destroy(() => {
-    //sessions gets destroyed and the user's session cookie is cleared as well.
-    res.clearCookie("connect.sid", { path: "/" });
-    res.status(200).json("Logged out!");
-  });
+  res.status(200).json("Logged out!");
 };
 
 async function matchingPasswords(
@@ -58,16 +52,18 @@ async function matchingPasswords(
 ): Promise<boolean> {
   console.log("Nu går det galt!");
   let hashedPassword = "";
+  let found = false;
   try {
     let user = await getUserByEmail(email);
     console.log(user);
     hashedPassword = (await getUserByEmail(email)).password;
-    return true;
+    console.log("Der eksisterede faktisk en bruger med mail", email);
+    found = true;
   } catch (error) {
     console.log("User does not exists", error);
   }
   console.log("Vi nåede herned!");
-  return false;
+  return found;
 }
 export const loginController = {
   loginUser,

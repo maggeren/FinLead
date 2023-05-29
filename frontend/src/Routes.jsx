@@ -7,6 +7,12 @@ import AuthContext from "./components/AuthContext";
 import { Spinner } from "./components/shared/Spinner";
 import { Register } from "./pages/Register";
 import { ProfilePage } from "./pages/ProfilePage";
+import { io } from "socket.io-client"
+
+//const socket = io(`http://localhost:${process.env.PORT}`);
+
+let socket;
+const serverURL = "http://localhost:4000";
 
 const router = createBrowserRouter([
   {
@@ -25,33 +31,22 @@ const router = createBrowserRouter([
 ]);
 
 function Routes() {
-  const [isLoggedIn, setIsLoggedIn] = useState(AuthContext);
+  const[userState, setUserState] = useState(AuthContext);
+  const [socket, setSocket] = useState(null);
+
   useEffect(() => {
-    const checkLoggedIn = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/api/checkLogin", {
-          method: "GET",
-          credentials: "include",
-        });
+    console.log("client-side code is executing!")
+    const socketInstance = io(serverURL);
+    setSocket(socketInstance);
 
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-          localStorage.removeItem("token");
-        }
-      } catch (error) {
-        console.error(error);
-      }
+    // Clean up the socket connection when the component unmounts
+    return () => {
+      socketInstance.disconnect();
     };
-
-    const token = localStorage.getItem("token");
-    if (token) {
-      checkLoggedIn();
-    }
   }, []);
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ userState, setUserState }}>
       <RouterProvider
         router={router}
         fallbackElement={Spinner}

@@ -106,10 +106,11 @@ ul.dropdown-menu {
   border: none;
 }
 
-/* parent search bar*/
-.form-container {
+
+
+form.form-search {
   position: relative;
-  width: 30vh;
+  /* width: 30vh; */
 }
 
 .form-container:before {
@@ -131,6 +132,7 @@ ul.dropdown-menu {
 .ticker-link {
   text-decoration: none;
   color: black;
+  cursor:pointer;
 }
 
 /* The search field when it gets focus/clicked on */

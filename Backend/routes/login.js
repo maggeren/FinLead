@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from "express";
 //import getUser from "../controllers/loginController";
 const loginRouter = express.Router();
-import { loginUser } from "../controllers/loginController";
+import { loginController } from "../controllers/authentication/loginController";
 loginRouter.post("/api/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield loginUser(req, res);
+    yield loginController.loginUser(req, res);
 }));
 export default loginRouter;

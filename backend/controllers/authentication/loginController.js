@@ -8,19 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import User from "../../models/User.js";
-import jwt from "jsonwebtoken";
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Nu er vi startet! fra localhost 4000.");
     console.log(req.body);
     try {
         const { email, password: plainTextPassword } = req.body;
         console.log("Plain text er ", plainTextPassword);
-        const userExists = yield matchingPasswords(email, plainTextPassword);
-        if (userExists) {
-            const user = yield getUserByEmail(email);
-            console.log(user);
-            const token = jwt.sign({ userName: user.userName }, "secretKey");
-            res.json({ token: token });
+        const user = yield matchingPasswords(email, plainTextPassword);
+        if (user) {
+            let userReference = yield getUserByEmail(email);
+            res.status(200).json(userReference);
         }
         else {
             res.status(400).json("Access denied!");
@@ -53,27 +50,25 @@ function getUserByEmail(email) {
 //      }
 // };
 const logoutUser = (req, res) => {
-    req.session.destroy(() => {
-        //sessions gets destroyed and the user's session cookie is cleared as well.
-        res.clearCookie("connect.sid", { path: "/" });
-        res.status(200).json("Logged out!");
-    });
+    res.status(200).json("Logged out!");
 };
 function matchingPasswords(email, plainTextPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Nu går det galt!");
         let hashedPassword = "";
+        let found = false;
         try {
             let user = yield getUserByEmail(email);
             console.log(user);
             hashedPassword = (yield getUserByEmail(email)).password;
-            return true;
+            console.log("Der eksisterede faktisk en bruger med mail", email);
+            found = true;
         }
         catch (error) {
             console.log("User does not exists", error);
         }
         console.log("Vi nåede herned!");
-        return false;
+        return found;
     });
 }
 export const loginController = {

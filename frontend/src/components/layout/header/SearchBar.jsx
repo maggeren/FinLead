@@ -45,19 +45,30 @@ export const SearchBar = () => {
   }, []);
 
   return (
-    <Form className="form-container">
+    <Form className="form-container"
+  onSubmit={(event) => {
+    event.preventDefault(); // prevent page refresh
+    if (filteredTickers.length > 0) {
+      navigate(`stock/${filteredTickers[0].ticker}`);
+    }
+  }} 
+    >
       <Form.Control
         ref={refForm}
         type="search"
         placeholder="Ticker"
         className="search-bar"
         aria-label="Search"
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && filteredTickers.length > 0) {
-            navigate(`stock/${filteredTickers[0].ticker}`);
-          }
-        }}
-        onClick={() => setIsOpen(true)}
+        // onKeyDown={(e) => {
+        //   if (e.key === "Enter" && filteredTickers.length > 0) {           
+        //     navigate(`stock/${filteredTickers[0].ticker}`);
+
+        //   }
+        // }}
+        onClick={(event) => {
+
+          setIsOpen(true)}
+        }
         onChange={(e) => {
           const value = e.target.value;
           const filtered =
