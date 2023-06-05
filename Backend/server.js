@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
         // Send a response back to the client  
     }));
     socket.on("newCommentAdded", (data) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(data.tickerRef);
+        console.log("Nu kommer der noget ind " + data.tickerRef);
         const updatedComments = yield commentController.getCommentsByTicker(data.tickerRef);
         console.log(updatedComments);
         socket.emit("serverResponse", updatedComments);
@@ -87,6 +87,16 @@ io.on("connection", (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+    socket.on("updateLike", (data) => __awaiter(void 0, void 0, void 0, function* () {
+        let comment;
+        if (data.operation === "addLike") {
+            comment = yield commentController.incrementLike(data.comment, data.user);
+        }
+        else {
+            comment = yield commentController.removeLike(data.comment, data.user);
+        }
+        io.emit("likesUpdated", comment);
+    }));
     // Send a message to the client on connection
     socket.send("Welcome to the WebSocket server!");
 });

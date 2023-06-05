@@ -1,19 +1,22 @@
-import React, {Fragment, useState, useEffect} from "react";
+import React, {Fragment, useState, useContext, useEffect} from "react";
+import AuthContext from "./AuthContext";
 import { CommentField } from "./CommentField";
 import "../styles/user.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUserCircle,
   } from "@fortawesome/free-solid-svg-icons";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4000")
 
 export const CommentBox =(props)=>{
 
   const [content, setContent] = useState(props.content);
-  
+  const { userState, setUserState } = useContext(AuthContext);
   const id = props.id;
   const [isEditField, setEditField] = useState(false);
-
-  const[likes, setLikes] = useState(props.likes);
+  const [likes, setUserLikes] = useState(props.likes);
   const[replies, setReplies] = useState([])
 
   const[replyActive, setReply] = useState(false); 
@@ -21,12 +24,13 @@ export const CommentBox =(props)=>{
 
   useEffect(() => {
     getReplies();
-
-  }, []);
+    const user = userState.userReference;
+    const userLikesComment = props.likes.includes(user);
+    setUserLikes(userLikesComment);
+  }, [props.likes, userState.userReference]);
 
   const handleUpdate = async(event)=>{
     event.preventDefault();
-    console.log(content);
     setEditField(false);
     let response = null;
     let objectToPass ={id: id, content: content}
@@ -55,7 +59,6 @@ export const CommentBox =(props)=>{
         cache: "default",
       });
       const responseData = await response.json();
-      console.log(responseData);
       setReplies(responseData);
     } catch(error){
       console.log(error);
@@ -85,48 +88,41 @@ export const CommentBox =(props)=>{
   }
 
 
-  const incrementLike= (event)=>{
-     setLikes(likes +1);
-     console.log(likes);
+  const setLkes = (event)=>{
+     const user = userState.userReference;
+     console.log(props.likes.includes(user));
+     const operation = props.likes.includes(user) ? "removeLike": "addLike"
+     const message = {user: user, comment: id, operation: operation};
+     socket.emit("updateLike", message);
+     
+     setUserLikes(!likes);
   }
 
   const handleChange = (event) => {
     event.preventDefault();
     const value = event.target.value;
-    console.log(value);
     setContent(value);
 
   };
 
   const reply = async(event) => {
      event.preventDefault();
-     let response = null;
      const content = event.target[0].value;
      const commentObject ={
-      content: content,
-      user: "kage",
+      comment: content,
+      user: userState.userReference,
       tickerRef: props.ticker,
       parent: id
     };
-    console.log(commentObject.parent);
-    response = await fetch(`http://localhost:4000/api/postComment/${props.ticker}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(commentObject),
-       })
-       if(response.ok){
-        const responseData = await response.json();
-        console.log(responseData);
-       }
-       console.log("Så er vi færdige!");
+    socket.emit("comment", commentObject);
+    setReply(!replyActive);
 
   }
-
-  const openReply = ()=>{
-    setReply(!replyActive)
-  }
+    
+  // socket.on("likesUpdated", (comment)=>{
+  //   console.log(comment);
+  //   likesUpdate(comment.likes);
+  // });
 
   return (
     <Fragment>
@@ -149,8 +145,8 @@ export const CommentBox =(props)=>{
         </div>
         <div className="bottom-row">
         {/* <span className="bottom-item">👍</span>     */}
-        <span className=" bottom-item post-like" onClick={incrementLike}>{likes} </span>
-        <span className="bottom-item" onClick={openReply}>Reply</span> 
+        <span className=" bottom-item post-like" onClick={setLkes}>{likes.length} </span>
+        <span className="bottom-item" onClick={() =>{setReply(!replyActive)}}>Reply</span> 
         <span className="bottom-item post-date">{props.date}</span>
         </div>
         <hr></hr>

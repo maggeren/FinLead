@@ -56,9 +56,10 @@ function Stock() {
   // };
 
   socket.on("serverResponse", (updatedComments) => {
-    console.log("Det her hørte jeg godt, du har nogle nye kommentarer til mig ", updatedComments);
     setComments(updatedComments);
   });
+
+
 
   useEffect(() => {
     fetchComments();
@@ -89,7 +90,7 @@ function Stock() {
       });
       const responseData = await response.json();
       console.log(responseData);
-      setComments(responseData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+      setComments(responseData.reverse());
     } catch (error) {
       console.log(error);
     }

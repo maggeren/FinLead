@@ -32,9 +32,9 @@ export const CommentField=(props) =>{
 
     const handleSubmit = async(event) =>{
        event.preventDefault();
-       const messageObject = {tickerRef: props.ticker, comment:comment, user: userState.userReference};
+       const messageObject = {tickerRef: props.ticker, comment:comment, user: userState.userReference, parent: null};
        socket.emit("comment", messageObject)
-       //setExpanded(false);
+       setExpanded(false);
        setComment('');
 
       //  socket.on("serverResponse", (message) => {
