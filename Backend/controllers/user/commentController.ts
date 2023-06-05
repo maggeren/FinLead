@@ -3,27 +3,17 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
 const saveComment = async(data:any) => {
-    // console.log("Going to save comment");
-    // const content = req.body.content
-    // const user = req.body.user;
-    // console.log(content);
-    // console.log("Userreference is " + user);
-    // console.log("parametre er" + req.params);
-    // const tickerRef = req.params.ticker;
-    // console.log("tickerRef er " + tickerRef)
-    // const parent = req.body.parent ?? null;
-    // console.log(parent);
+    console.log(data.parent)
     const comment = new Comment({
         content: data.comment,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: data.tickerRef,
         userReference: data.user,
-        likes: 0,
-        //parent: "null"
+        likes: [],
+        parent: data.parent
     });
     await comment.save();
     console.log("Saved new comment to the database")
-   // res.status(200).json("New user added")
 };
 
 const getCommentsByTicker= async(ticker: any)=>{
@@ -36,6 +26,30 @@ const getComments = async(req:any, res:any) =>{
     const comments = await Comment.find({tickerReference: ticker});
    // console.log(comments);
     res.status(200).json(comments);
+}
+
+const getCommentById = async(id:any) =>{
+    const comment = await Comment.findById({_id: id});    
+    return comment;
+}
+
+const incrementLike = async(id: any, user: any) =>{
+     const comment = await getCommentById(id);
+     comment?.likes.push(user);
+     console.log(comment?.likes);
+     await comment?.save();
+     return comment;
+}
+
+const removeLike = async(id: any, user: any) =>{
+    const comment = await getCommentById(id);
+    const index = comment?.likes.indexOf(user);
+    if(index != undefined){
+         comment?.likes.splice(index, 1);
+    }
+    console.log(comment?.likes);
+    await comment?.save();
+    return comment;
 }
 
 const getReplies = async(req: any, res:any)=>{
@@ -79,4 +93,4 @@ const deleteComment = async(req:any, res:any) =>{
     res.status(200).json("Her er din kommentar");
 }
 
-export const commentController = {saveComment, getComments, getCommentsByTicker, updateComment, deleteComment, getReplies}
+export const commentController = {saveComment, getComments, getCommentsByTicker, updateComment, deleteComment, getReplies, getCommentById, incrementLike, removeLike }

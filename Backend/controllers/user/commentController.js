@@ -9,27 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Comment from "../../models/Comment.js";
 const saveComment = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log("Going to save comment");
-    // const content = req.body.content
-    // const user = req.body.user;
-    // console.log(content);
-    // console.log("Userreference is " + user);
-    // console.log("parametre er" + req.params);
-    // const tickerRef = req.params.ticker;
-    // console.log("tickerRef er " + tickerRef)
-    // const parent = req.body.parent ?? null;
-    // console.log(parent);
+    console.log(data.parent);
     const comment = new Comment({
         content: data.comment,
         createdAt: new Date().toLocaleDateString("en-GB"),
         tickerReference: data.tickerRef,
         userReference: data.user,
-        likes: 0,
-        //parent: "null"
+        likes: [],
+        parent: data.parent
     });
     yield comment.save();
     console.log("Saved new comment to the database");
-    // res.status(200).json("New user added")
 });
 const getCommentsByTicker = (ticker) => __awaiter(void 0, void 0, void 0, function* () {
     const commments = yield Comment.find({ tickerReference: ticker });
@@ -40,6 +30,27 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const comments = yield Comment.find({ tickerReference: ticker });
     // console.log(comments);
     res.status(200).json(comments);
+});
+const getCommentById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const comment = yield Comment.findById({ _id: id });
+    return comment;
+});
+const incrementLike = (id, user) => __awaiter(void 0, void 0, void 0, function* () {
+    const comment = yield getCommentById(id);
+    comment === null || comment === void 0 ? void 0 : comment.likes.push(user);
+    console.log(comment === null || comment === void 0 ? void 0 : comment.likes);
+    yield (comment === null || comment === void 0 ? void 0 : comment.save());
+    return comment;
+});
+const removeLike = (id, user) => __awaiter(void 0, void 0, void 0, function* () {
+    const comment = yield getCommentById(id);
+    const index = comment === null || comment === void 0 ? void 0 : comment.likes.indexOf(user);
+    if (index != undefined) {
+        comment === null || comment === void 0 ? void 0 : comment.likes.splice(index, 1);
+    }
+    console.log(comment === null || comment === void 0 ? void 0 : comment.likes);
+    yield (comment === null || comment === void 0 ? void 0 : comment.save());
+    return comment;
 });
 const getReplies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Så henter vi svar!");
@@ -79,4 +90,4 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     });
     res.status(200).json("Her er din kommentar");
 });
-export const commentController = { saveComment, getComments, getCommentsByTicker, updateComment, deleteComment, getReplies };
+export const commentController = { saveComment, getComments, getCommentsByTicker, updateComment, deleteComment, getReplies, getCommentById, incrementLike, removeLike };

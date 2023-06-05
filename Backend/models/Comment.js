@@ -7,11 +7,14 @@ const commentSchema = new mongoose.Schema({
     createdAt: String,
     tickerReference: String,
     userReference: String,
-    likes: Number,
-    // parent: {
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    ref: "Comment"
-    //  }
+    likes: {
+        type: [String],
+        default: [] // Set the default value to an empty array 
+    },
+    parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }
 });
 const Comment = mongoose.model("Comment", commentSchema);
 export default Comment;
